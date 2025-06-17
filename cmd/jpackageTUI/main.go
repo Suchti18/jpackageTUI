@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/rivo/tview"
-	"time"
 )
 
 var (
@@ -13,16 +12,6 @@ var (
 func addNewButton() {
 	text := tview.NewTextView().SetText("Hello, world")
 	flex.AddItem(text, 0, 1, false)
-}
-
-func every5Sec() {
-	tick := time.NewTicker(5 * time.Second)
-	for {
-		select {
-		case <-tick.C:
-			addNewButton()
-		}
-	}
 }
 
 func main() {

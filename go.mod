@@ -1,4 +1,4 @@
-module jpackageTUI
+module github.com/nils/jpackageTUI
 
 go 1.24
 

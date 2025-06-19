@@ -28,6 +28,10 @@ func NewOptionsUI(options []*option.Option) *OptionUI {
 				SetLabel(opt.GetOptionName()).
 				SetLabelColor(tcell.NewHexColor(0xd4c57b)).
 				SetOptions(opt.GetPossibleOptions(), func(text string, index int) {})
+		} else if opt.HasNoParameter() {
+			field = tview.NewCheckbox().
+				SetLabel(opt.GetOptionName()).
+				SetLabelColor(tcell.NewHexColor(0xd4c57b))
 		} else {
 			field = tview.NewInputField().
 				SetLabel(opt.GetOptionName()).
@@ -35,7 +39,7 @@ func NewOptionsUI(options []*option.Option) *OptionUI {
 				SetText("")
 		}
 
-		if opt.IsOptional() {
+		if opt.IsOptional() && !opt.HasNoParameter() {
 			checkbox := tview.NewCheckbox()
 			checkbox.SetLabel(fmt.Sprintf("Include <%s>?", opt.GetOptionName()))
 
@@ -80,8 +84,13 @@ func (optionUI *OptionUI) getData() map[*option.Option]string {
 			inputField := field.(*tview.InputField)
 			data[opt] = inputField.GetText()
 		case *tview.DropDown:
-			inputField := field.(*tview.DropDown)
-			_, data[opt] = inputField.GetCurrentOption()
+			dropdown := field.(*tview.DropDown)
+			_, data[opt] = dropdown.GetCurrentOption()
+		case *tview.Checkbox:
+			checkbox := field.(*tview.Checkbox)
+			if checkbox.IsChecked() {
+				data[opt] = ""
+			}
 		}
 	}
 

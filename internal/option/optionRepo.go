@@ -1,25 +1,19 @@
 package option
 
-import (
-	"container/list"
-	"sync"
-)
-
 var (
-	repo *list.List
-	lock = &sync.Mutex{}
+	repo = make(map[*Option]string)
 )
 
-func GetRepo() *list.List {
-	if repo == nil {
-		lock.Lock()
-		defer lock.Unlock()
+func AddToRepo(key *Option, value string) {
+	repo[key] = value
+}
 
-		if repo == nil {
-			repo = list.New()
-			repo.Init()
-		}
+func AddMapToRepo(data map[*Option]string) {
+	for k, v := range data {
+		repo[k] = v
 	}
+}
 
+func GetRepo() map[*Option]string {
 	return repo
 }

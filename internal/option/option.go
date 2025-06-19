@@ -8,10 +8,11 @@ type Option struct {
 	optional        bool
 	singleUse       bool
 	possibleOptions []string
+	noParameter     bool
 }
 
 func NewOption(optionName string, optionDesc string, optionCommand string, optionOs Os, optional bool, singleUse bool,
-	options []string) *Option {
+	options []string, noParameter bool) *Option {
 	return &Option{
 		optionName:      optionName,
 		optionDesc:      optionDesc,
@@ -20,6 +21,7 @@ func NewOption(optionName string, optionDesc string, optionCommand string, optio
 		optional:        optional,
 		singleUse:       singleUse,
 		possibleOptions: options,
+		noParameter:     noParameter,
 	}
 }
 
@@ -49,4 +51,8 @@ func (opt *Option) IsSingleUse() bool {
 
 func (opt *Option) GetPossibleOptions() []string {
 	return opt.possibleOptions
+}
+
+func (opt *Option) HasNoParameter() bool {
+	return opt.noParameter
 }

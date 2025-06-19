@@ -30,13 +30,14 @@ func LoadAll() {
 func loadGeneric() {
 	genericOptionUI = NewOptionsUI([]*option.Option{
 		option.NewOption(
-			"Type",
-			"Type of the result",
-			"--type",
+			"Name",
+			"Name of the application and/or package",
+			"--name",
 			option.CrossPlatform,
 			true,
 			true,
-			typeOptions),
+			[]string{},
+			false),
 		option.NewOption(
 			"App Version",
 			"Version of the application and/or package",
@@ -44,7 +45,35 @@ func loadGeneric() {
 			option.CrossPlatform,
 			true,
 			true,
-			[]string{}),
+			[]string{},
+			false),
+		option.NewOption(
+			"Copyright",
+			"Copyright for the application",
+			"--copyright",
+			option.CrossPlatform,
+			true,
+			true,
+			[]string{},
+			false),
+		option.NewOption(
+			"Description",
+			"Description of the application",
+			"--description",
+			option.CrossPlatform,
+			true,
+			true,
+			[]string{},
+			false),
+		option.NewOption(
+			"Type",
+			"Type of the result",
+			"--type",
+			option.CrossPlatform,
+			true,
+			true,
+			typeOptions,
+			false),
 	})
 	genericOptionUI.addNextButton()
 }
@@ -52,13 +81,14 @@ func loadGeneric() {
 func loadLinks() {
 	linkOptionUI = NewOptionsUI([]*option.Option{
 		option.NewOption(
-			"Add modules",
-			"A comma (\",\") separated list of modules to add",
-			"--add-modules",
+			"Module",
+			"The main module (and optionally main class) of the application",
+			"--module",
 			option.CrossPlatform,
 			false,
 			true,
-			[]string{}),
+			[]string{},
+			false),
 		option.NewOption(
 			"Module path",
 			"Each path is either a directory of modules or the path to a modular jar, and is absolute or relative to the current directory.",
@@ -66,7 +96,17 @@ func loadLinks() {
 			option.CrossPlatform,
 			false,
 			true,
-			[]string{}),
+			[]string{},
+			false),
+		option.NewOption(
+			"--win-console",
+			"Creates a console launcher for the application, should be specified for application which requires console interactions",
+			"--win-console",
+			option.Win,
+			true,
+			true,
+			[]string{},
+			true),
 	})
 	linkOptionUI.addBackButton()
 	linkOptionUI.addFinishButton()

@@ -1,10 +1,10 @@
 package ui
 
 import (
-	"fmt"
 	"github.com/gdamore/tcell/v2"
 	"github.com/nils/jpackageTUI/internal/option"
 	"github.com/rivo/tview"
+	"os"
 	"strconv"
 )
 
@@ -44,14 +44,14 @@ func (ui *Ui) Start() error {
 
 	ui.app.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
 		if event.Key() == tcell.KeyEscape {
-			ui.app.Stop()
+			os.Exit(-1)
 		}
 
 		return event
 	})
 
 	if err := ui.app.Run(); err != nil {
-		ui.app.Stop()
+		os.Exit(1)
 		return err
 	}
 
@@ -77,12 +77,9 @@ func switchPage(name int) {
 }
 
 func finish() {
-	var allData []map[*option.Option]string
-
 	for _, optionUI := range UI.optionUIs {
-		allData = append(allData, optionUI.getData())
+		option.AddMapToRepo(optionUI.getData())
 	}
 
 	UI.app.Stop()
-	fmt.Println(allData)
 }

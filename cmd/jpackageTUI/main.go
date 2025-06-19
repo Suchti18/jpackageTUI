@@ -41,7 +41,7 @@ func runjpackageCommand(parameters []string) {
 
 	cmd := exec.Command("jpackage", splittedParameters...)
 
-	fmt.Print("Args: ")
+	fmt.Print("Command: ")
 	fmt.Println(cmd.Args)
 
 	cmd.Stdout = os.Stdout

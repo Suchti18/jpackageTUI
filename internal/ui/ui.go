@@ -4,6 +4,7 @@ import (
 	"github.com/gdamore/tcell/v2"
 	"github.com/nils/jpackageTUI/internal/option"
 	"github.com/rivo/tview"
+	"strconv"
 )
 
 type Primitive interface {
@@ -13,8 +14,7 @@ type Primitive interface {
 }
 
 const (
-	none     = "default"
-	appimage = "app-image"
+	appImage = "app-image"
 	exe      = "exe"
 	msi      = "msi"
 	rpm      = "rpm"
@@ -24,8 +24,9 @@ const (
 )
 
 var (
-	UI          *Ui
-	typeOptions = []string{none, appimage, exe, msi, rpm, deb, pkg, dmg}
+	UI *Ui
+
+	typeOptions = []string{appImage, exe, msi, rpm, deb, pkg, dmg}
 )
 
 type Ui struct {
@@ -68,16 +69,31 @@ func (ui *Ui) Start() error {
 			true,
 			[]string{}),
 	})
+	genericOptionUI.addNextButton()
 
-	grid := tview.NewGrid().
-		SetRows(0).
-		SetColumns(0).
-		AddItem(genericOptionUI.GetPrimitive(), 0, 0, 1, 1, 0, 0, true)
-
-	grid.SetBorder(true)
+	linkOptionUI := NewOptionsUI([]*option.Option{
+		option.NewOption(
+			"Add modules",
+			"A comma (\",\") separated list of modules to add",
+			"--add-modules",
+			option.CrossPlatform,
+			false,
+			true,
+			[]string{}),
+		option.NewOption(
+			"Module path",
+			"Each path is either a directory of modules or the path to a modular jar, and is absolute or relative to the current directory.",
+			"--module-path",
+			option.CrossPlatform,
+			false,
+			true,
+			[]string{}),
+	})
+	linkOptionUI.addFinishButton()
 
 	ui.pages = tview.NewPages().
-		AddAndSwitchToPage("main", grid, true)
+		AddAndSwitchToPage("1", genericOptionUI.GetPrimitive(), true).
+		AddPage("2", linkOptionUI.GetPrimitive(), true, false)
 
 	ui.app.SetRoot(ui.pages, true)
 	ui.app.SetFocus(genericOptionUI.GetPrimitive())
@@ -102,4 +118,14 @@ func (ui *Ui) Start() error {
 	}
 
 	return nil
+}
+
+func nextPage() {
+	name, _ := UI.pages.GetFrontPage()
+	s, _ := strconv.Atoi(name)
+	UI.pages.SwitchToPage(strconv.Itoa(s + 1))
+}
+
+func finish() {
+
 }

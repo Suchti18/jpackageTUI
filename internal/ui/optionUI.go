@@ -1,6 +1,7 @@
 package ui
 
 import (
+	"fmt"
 	"github.com/gdamore/tcell/v2"
 	"github.com/nils/jpackageTUI/internal/option"
 	"github.com/rivo/tview"
@@ -20,32 +21,64 @@ func NewOptionsUI(options []*option.Option) *OptionUI {
 	}
 
 	for _, opt := range options {
-		if len(opt.GetPossibleOptions()) > 0 {
-			dropdown := tview.NewDropDown()
-			dropdown.SetLabel(opt.GetOptionName())
-			dropdown.SetOptions(opt.GetPossibleOptions(), func(text string, index int) {
+		var field tview.FormItem
 
+		if len(opt.GetPossibleOptions()) > 0 {
+			field = tview.NewDropDown().
+				SetLabel(opt.GetOptionName()).
+				SetLabelColor(tcell.NewHexColor(0xd4c57b)).
+				SetOptions(opt.GetPossibleOptions(), func(text string, index int) {})
+		} else {
+			field = tview.NewInputField().
+				SetLabel(opt.GetOptionName()).
+				SetLabelColor(tcell.NewHexColor(0xd4c57b)).
+				SetText("")
+		}
+
+		if opt.IsOptional() {
+			checkbox := tview.NewCheckbox()
+			checkbox.SetLabel(fmt.Sprintf("Include <%s>?", opt.GetOptionName()))
+
+			field.SetDisabled(true)
+
+			checkbox.SetChangedFunc(func(checked bool) {
+				if checked {
+					field.SetDisabled(false)
+				} else {
+					field.SetDisabled(true)
+				}
 			})
 
-			optionUI.Fields[opt] = dropdown
-			optionUI.Form.AddFormItem(dropdown)
-		} else {
-			inputField := tview.NewInputField()
-			inputField.SetLabel(opt.GetOptionName())
-			inputField.SetText("")
-			optionUI.Fields[opt] = inputField
-			optionUI.Form.AddFormItem(inputField)
-
+			optionUI.Form.AddFormItem(checkbox)
 		}
+
+		optionUI.Form.AddFormItem(field)
+		optionUI.Fields[opt] = field
 	}
 
 	optionUI.Form.
-		SetFieldBackgroundColor(tcell.ColorDarkBlue).
-		SetButtonBackgroundColor(tcell.ColorDarkBlue)
+		SetFieldBackgroundColor(tcell.NewHexColor(0x343d46)).
+		SetButtonBackgroundColor(tcell.NewHexColor(0x343d46)).
+		SetBackgroundColor(tcell.NewHexColor(0x2b303b)).
+		SetBorder(true).
+		SetBorderColor(tcell.NewHexColor(0x8fa1b3)).
+		SetTitle("jpackageTUI")
 
 	return optionUI
 }
 
 func (optionUI *OptionUI) GetPrimitive() tview.Primitive {
 	return optionUI.Form
+}
+
+func (optionUI *OptionUI) addNextButton() {
+	optionUI.Form.AddButton("Next", func() {
+		nextPage()
+	})
+}
+
+func (optionUI *OptionUI) addFinishButton() {
+	optionUI.Form.AddButton("Finish", func() {
+		finish()
+	})
 }

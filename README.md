@@ -90,6 +90,7 @@ Please make sure to update tests as appropriate.
 
 AI helped in following areas:
 * Debugging
+* README creation
 
 ---
 

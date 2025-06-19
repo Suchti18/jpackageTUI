@@ -15,7 +15,11 @@ func main() {
 		log.Fatal(err)
 	}
 
-	runjpackageCommand(option.CreateParameters())
+	parameters := option.CreateParameters()
+
+	if len(parameters) > 0 {
+		runjpackageCommand(parameters)
+	}
 
 	os.Exit(0)
 }

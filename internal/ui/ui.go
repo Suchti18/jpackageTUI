@@ -4,7 +4,6 @@ import (
 	"github.com/gdamore/tcell/v2"
 	"github.com/nils/jpackageTUI/internal/option"
 	"github.com/rivo/tview"
-	"os"
 	"strconv"
 )
 
@@ -44,14 +43,14 @@ func (ui *Ui) Start() error {
 
 	ui.app.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
 		if event.Key() == tcell.KeyEscape {
-			os.Exit(-1)
+			UI.app.Stop()
 		}
 
 		return event
 	})
 
 	if err := ui.app.Run(); err != nil {
-		os.Exit(1)
+		UI.app.Stop()
 		return err
 	}
 

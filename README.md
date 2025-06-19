@@ -1,6 +1,6 @@
 <div align="center">
 
-[![jpackageTUI](./.github/banner.svg)](#Installation)
+[![jpackageTUI](./.github/banner.svg)](#jpackageTUI)
 
 </div>
 

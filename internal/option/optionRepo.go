@@ -17,6 +17,7 @@ func GetRepo() *list.List {
 
 		if repo == nil {
 			repo = list.New()
+			repo.Init()
 		}
 	}
 

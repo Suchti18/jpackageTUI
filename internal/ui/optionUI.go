@@ -71,6 +71,29 @@ func (optionUI *OptionUI) GetPrimitive() tview.Primitive {
 	return optionUI.Form
 }
 
+func (optionUI *OptionUI) getData() map[*option.Option]string {
+	var data = make(map[*option.Option]string)
+
+	for opt, field := range optionUI.Fields {
+		switch field.(type) {
+		case *tview.InputField:
+			inputField := field.(*tview.InputField)
+			data[opt] = inputField.GetText()
+		case *tview.DropDown:
+			inputField := field.(*tview.DropDown)
+			_, data[opt] = inputField.GetCurrentOption()
+		}
+	}
+
+	return data
+}
+
+func (optionUI *OptionUI) addBackButton() {
+	optionUI.Form.AddButton("Back", func() {
+		lastPage()
+	})
+}
+
 func (optionUI *OptionUI) addNextButton() {
 	optionUI.Form.AddButton("Next", func() {
 		nextPage()

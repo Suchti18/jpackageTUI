@@ -17,3 +17,7 @@ func AddMapToRepo(data map[*Option]string) {
 func GetRepo() map[*Option]string {
 	return repo
 }
+
+func ClearRepo() {
+	repo = make(map[*Option]string)
+}

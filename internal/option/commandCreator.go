@@ -19,10 +19,12 @@ func CreateParameters() []string {
 				first = false
 			}
 
-			if strings.Contains(value, " ") {
-				newOption = newOption + " \"" + value + "\""
-			} else {
-				newOption = newOption + " " + value
+			if !option.HasNoParameter() {
+				if strings.Contains(value, " ") {
+					newOption = newOption + " \"" + value + "\""
+				} else {
+					newOption = newOption + " " + value
+				}
 			}
 
 			parameters = append(parameters, newOption)

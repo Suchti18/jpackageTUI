@@ -37,7 +37,8 @@ func loadGeneric() {
 			true,
 			true,
 			[]string{},
-			false),
+			false,
+			option.Text),
 		option.NewOption(
 			"App Version",
 			"Version of the application and/or package",
@@ -46,7 +47,8 @@ func loadGeneric() {
 			true,
 			true,
 			[]string{},
-			false),
+			false,
+			option.Text),
 		option.NewOption(
 			"Copyright",
 			"Copyright for the application",
@@ -55,7 +57,8 @@ func loadGeneric() {
 			true,
 			true,
 			[]string{},
-			false),
+			false,
+			option.Text),
 		option.NewOption(
 			"Description",
 			"Description of the application",
@@ -64,7 +67,8 @@ func loadGeneric() {
 			true,
 			true,
 			[]string{},
-			false),
+			false,
+			option.Text),
 		option.NewOption(
 			"Type",
 			"Type of the result",
@@ -73,7 +77,8 @@ func loadGeneric() {
 			true,
 			true,
 			typeOptions,
-			false),
+			false,
+			option.Text),
 	})
 	genericOptionUI.addNextButton()
 }
@@ -88,7 +93,8 @@ func loadLinks() {
 			false,
 			true,
 			[]string{},
-			false),
+			false,
+			option.Text),
 		option.NewOption(
 			"Module path",
 			"Each path is either a directory of modules or the path to a modular jar, and is absolute or relative to the current directory.",
@@ -97,7 +103,8 @@ func loadLinks() {
 			false,
 			true,
 			[]string{},
-			false),
+			false,
+			option.File),
 		option.NewOption(
 			"--win-console",
 			"Creates a console launcher for the application, should be specified for application which requires console interactions",
@@ -106,7 +113,8 @@ func loadLinks() {
 			true,
 			true,
 			[]string{},
-			true),
+			true,
+			option.Text),
 	})
 	linkOptionUI.addBackButton()
 	linkOptionUI.addFinishButton()

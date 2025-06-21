@@ -9,10 +9,11 @@ type Option struct {
 	singleUse       bool
 	possibleOptions []string
 	noParameter     bool
+	inputType       Type
 }
 
 func NewOption(optionName string, optionDesc string, optionCommand string, optionOs Os, optional bool, singleUse bool,
-	options []string, noParameter bool) *Option {
+	options []string, noParameter bool, inputType Type) *Option {
 	return &Option{
 		optionName:      optionName,
 		optionDesc:      optionDesc,
@@ -22,6 +23,7 @@ func NewOption(optionName string, optionDesc string, optionCommand string, optio
 		singleUse:       singleUse,
 		possibleOptions: options,
 		noParameter:     noParameter,
+		inputType:       inputType,
 	}
 }
 
@@ -55,4 +57,8 @@ func (opt *Option) GetPossibleOptions() []string {
 
 func (opt *Option) HasNoParameter() bool {
 	return opt.noParameter
+}
+
+func (opt *Option) GetInputType() Type {
+	return opt.inputType
 }

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/nils/jpackageTUI/internal/exitCodes"
 	"github.com/nils/jpackageTUI/internal/option"
 	"github.com/nils/jpackageTUI/internal/ui"
 	"log"
@@ -11,6 +12,11 @@ import (
 )
 
 func main() {
+	if !isjpackageInstalled() {
+		fmt.Println("jpackageTUI is not runnable. Make sure to include it in the PATH variable.")
+		os.Exit(exitCodes.JpackageNotInstalled)
+	}
+
 	if err := ui.New().Start(); err != nil {
 		log.Fatal(err)
 	}
@@ -21,7 +27,17 @@ func main() {
 		runjpackageCommand(parameters)
 	}
 
-	os.Exit(0)
+	os.Exit(exitCodes.Success)
+}
+
+func isjpackageInstalled() bool {
+	cmd := exec.Command("jpackage")
+
+	if err := cmd.Run(); err != nil {
+		return false
+	}
+
+	return true
 }
 
 func runjpackageCommand(parameters []string) {

@@ -124,18 +124,47 @@ func DirectoryChooser(parentApp *tview.Application, showHidden bool, fastAccessP
 	dirView := newDirectoryView(showHidden, selectedPathView, nil, fastAccessPaths)
 	selectionPanel := tview.NewFlex().SetDirection(tview.FlexColumn).AddItem(dirView.dirView, 0, 2, true)
 
+	buttonsView := tview.NewForm()
+	buttonsView.SetButtonsAlign(tview.AlignRight)
+
+	// Cancel button
+	buttonsView.AddButton(tvclang.GetTranslations().Cancel, func() {
+		selectedPath = ""
+		app.Stop()
+	})
+
+	// Accept button
+	buttonsView.AddButton(tvclang.GetTranslations().Accept, func() {
+		selectedPath = dirView.selectedPath
+		app.Stop()
+	})
+
 	app.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
 		if event.Key() == tcell.KeyEsc {
-			selectedPath = dirView.selectedPath
+			selectedPath = ""
 			app.Stop()
+		} else if event.Key() == tcell.KeyRight || event.Key() == tcell.KeyLeft {
+			if dirView.dirView.HasFocus() {
+				app.SetFocus(buttonsView)
+			} else {
+				app.SetFocus(dirView.dirView)
+			}
+
+			return nil
 		}
 
 		return event
 	})
 
-	rootPanel := tview.NewFlex().SetDirection(tview.FlexRow)
-	rootPanel.AddItem(selectedPathView, 3, 0, false)
-	rootPanel.AddItem(selectionPanel, 0, 1, true)
+	rootPanel := tview.NewFlex().
+		SetDirection(tview.FlexRow).
+		AddItem(selectedPathView, 3, 0, false).
+		AddItem(selectionPanel, 0, 1, true).
+		AddItem(buttonsView, 3, 0, false)
+
+	selectedPathView.SetBackgroundColor(Colors.BackgroundColor)
+	dirView.dirView.SetBackgroundColor(Colors.BackgroundColor)
+	buttonsView.SetBackgroundColor(Colors.BackgroundColor)
 
 	app.SetRoot(rootPanel, true).EnableMouse(true).EnablePaste(true)
 	if parentApp != nil {

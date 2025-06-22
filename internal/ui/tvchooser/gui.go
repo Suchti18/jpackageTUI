@@ -75,6 +75,8 @@ func FileChooser(parentApp *tview.Application, showHidden bool, fastAccessPaths 
 			} else {
 				app.SetFocus(dirView.dirView)
 			}
+
+			return nil
 		} else if event.Key() == tcell.KeyLeft {
 			if dirView.dirView.HasFocus() {
 				app.SetFocus(buttonsView)
@@ -83,6 +85,8 @@ func FileChooser(parentApp *tview.Application, showHidden bool, fastAccessPaths 
 			} else {
 				app.SetFocus(fileView.fileList)
 			}
+
+			return nil
 		}
 
 		return event

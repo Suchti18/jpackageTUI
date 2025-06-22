@@ -2,6 +2,8 @@ package tvchooser
 
 import (
 	"fmt"
+	"github.com/gdamore/tcell/v2"
+	"github.com/nils/jpackageTUI/internal/Const/Colors"
 	"os"
 
 	"github.com/AEROGU/tvchooser/tvclang"
@@ -101,6 +103,8 @@ func newFileView(rootPath string, showHidden bool, textViewToUpdate *tview.TextV
 		directoryView:    diredirectoryView,
 	}
 
+	fv.fileList.SetMainTextStyle(tcell.StyleDefault.Foreground(tcell.ColorWhite).Background(Colors.BackgroundColor))
+	fv.fileList.SetSecondaryTextStyle(tcell.StyleDefault.Foreground(tcell.ColorForestGreen).Background(Colors.BackgroundColor))
 	fv.updatePath(rootPath)
 
 	return fv

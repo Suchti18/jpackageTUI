@@ -3,6 +3,7 @@ package tvchooser
 import (
 	"github.com/AEROGU/tvchooser/mounted"
 	"github.com/AEROGU/tvchooser/tvclang"
+	"github.com/nils/jpackageTUI/internal/Const/Colors"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -54,7 +55,6 @@ func (dv *directoryView) addChildDirectories(target *tview.TreeNode, path string
 		}
 
 		target.SetColor(tcell.ColorRed)
-		// target.SetSelectable(false)
 		return
 	}
 
@@ -75,8 +75,7 @@ func (dv *directoryView) addChildDirectories(target *tview.TreeNode, path string
 			IsCustom: false,
 		})
 
-		// node.SetColor(tcell.ColorGreen)
-		node.SetColor(tcell.ColorTeal)
+		node.SetTextStyle(tcell.StyleDefault.Foreground(tcell.ColorTeal).Background(Colors.BackgroundColor))
 		node.SetIndent(1)
 
 		target.AddChild(node)
@@ -151,6 +150,8 @@ func (dv *directoryView) onNodeSelected(node *tview.TreeNode) {
 			info.IsFinal = true
 			node.SetReference(info)
 
+			node.SetTextStyle(tcell.StyleDefault.Foreground(tcell.ColorWhite).Background(Colors.BackgroundColor))
+
 			return
 		}
 
@@ -170,6 +171,8 @@ func (dv *directoryView) onNodeSelected(node *tview.TreeNode) {
 	} else {
 		node.SetText(collapsedPrefix + txt)
 	}
+
+	node.SetTextStyle(tcell.StyleDefault.Foreground(tcell.ColorWhite).Background(Colors.BackgroundColor))
 }
 
 // newDirectoryView creates a new directory view with the specified showHidden flag.
@@ -183,7 +186,9 @@ func newDirectoryView(showHidden bool, textViewToUpdate *tview.TextView, onSelec
 	tree := tview.NewTreeView()
 
 	// Add rootNode node.
-	rootNode := tview.NewTreeNode(expandedPrefix + tvclang.GetTranslations().ThisPC).SetColor(tcell.ColorWhite).SetIndent(0)
+	rootNode := tview.NewTreeNode(expandedPrefix + tvclang.GetTranslations().ThisPC).
+		SetTextStyle(tcell.StyleDefault.Foreground(tcell.ColorWhite).Background(Colors.BackgroundColor)).
+		SetIndent(0)
 	rootNode.SetReference(nodeInfo{
 		Path:     "",
 		IsRoot:   true,
@@ -236,8 +241,9 @@ func newDirectoryView(showHidden bool, textViewToUpdate *tview.TextView, onSelec
 	if runtime.GOOS == "windows" {
 		devices, err := mounted.GetWindowsDriveLetters()
 		if err != nil {
-			devicesNode.SetColor(tcell.ColorRed)
-			devicesNode.SetSelectable(false)
+			devicesNode.SetColor(tcell.ColorRed).
+				SetSelectable(false).
+				SetTextStyle(tcell.StyleDefault.Foreground(tcell.ColorWhite).Background(Colors.BackgroundColor))
 		} else {
 			for _, drive := range devices {
 				driveRoot := drive + ":" + string(os.PathSeparator)
@@ -269,6 +275,7 @@ func newDirectoryView(showHidden bool, textViewToUpdate *tview.TextView, onSelec
 
 func addChildNode(rootNode *tview.TreeNode, nodeName string, expanded bool, info nodeInfo) *tview.TreeNode {
 	var prefix string
+
 	if expanded {
 		prefix = expandedPrefix
 	} else {
@@ -276,6 +283,9 @@ func addChildNode(rootNode *tview.TreeNode, nodeName string, expanded bool, info
 	}
 
 	newNode := tview.NewTreeNode(prefix + nodeName).SetReference(info)
+	newNode.SetTextStyle(tcell.StyleDefault.Foreground(tcell.ColorWhite).Background(Colors.BackgroundColor))
 	rootNode.AddChild(newNode)
+	rootNode.SetTextStyle(tcell.StyleDefault.Foreground(tcell.ColorWhite).Background(Colors.BackgroundColor))
+
 	return newNode
 }

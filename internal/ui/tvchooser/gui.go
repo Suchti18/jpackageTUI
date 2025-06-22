@@ -1,10 +1,11 @@
 package tvchooser
 
 import (
+	"github.com/AEROGU/tvchooser/tvclang"
 	"github.com/gdamore/tcell/v2"
-	"os"
-
+	"github.com/nils/jpackageTUI/internal/Const/Colors"
 	"github.com/rivo/tview"
+	"os"
 )
 
 // FileChooser let the user selects a file and returns the selected file path.
@@ -29,25 +30,63 @@ func FileChooser(parentApp *tview.Application, showHidden bool, fastAccessPaths 
 	dirView.onSelectedFunc = func(node *tview.TreeNode) {
 		fileView.updatePath(node.GetReference().(nodeInfo).Path)
 	}
-	selectionPanel := tview.NewFlex().SetDirection(tview.FlexColumn).AddItem(dirView.dirView, 0, 1, true).AddItem(fileView.fileList, 0, 1, false)
+	selectionPanel := tview.NewFlex().
+		SetDirection(tview.FlexColumn).
+		AddItem(dirView.dirView, 0, 1, true).
+		AddItem(fileView.fileList, 0, 1, false)
+
+	buttonsView := tview.NewForm()
+	buttonsView.SetButtonsAlign(tview.AlignRight)
+	// Cancel button
+	buttonsView.AddButton(tvclang.GetTranslations().Cancel, func() {
+		selectedPath = ""
+		app.Stop()
+	})
+	// Accept button
+	buttonsView.AddButton(tvclang.GetTranslations().Accept, func() {
+		selectedPath = selectedPathView.GetText(false)
+		//if selected path ends with PathSeparator, is a directory, so set selected path to ""
+		if len(selectedPath) > 0 && selectedPath[len(selectedPath)-1] == os.PathSeparator {
+			selectedPath = ""
+		}
+		app.Stop()
+	})
+
+	rootPanel := tview.NewFlex().
+		SetDirection(tview.FlexRow).
+		AddItem(selectedPathView, 3, 0, false).
+		AddItem(selectionPanel, 0, 1, true).
+		AddItem(buttonsView, 3, 0, false)
+
+	selectedPathView.SetBackgroundColor(Colors.BackgroundColor)
+	dirView.dirView.SetBackgroundColor(Colors.BackgroundColor)
+	fileView.fileList.SetBackgroundColor(Colors.BackgroundColor)
+	buttonsView.SetBackgroundColor(Colors.BackgroundColor)
 
 	app.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
 		if event.Key() == tcell.KeyEsc {
-			selectedPath = selectedPathView.GetText(false)
-			//if selected path ends with PathSeparator, is a directory, so set selected path to ""
-			if len(selectedPath) > 0 && selectedPath[len(selectedPath)-1] == os.PathSeparator {
-				selectedPath = ""
-			}
-			// selectedPath = dirView.selectedPath + fileView.selectedFileName
+			selectedPath = ""
 			app.Stop()
+		} else if event.Key() == tcell.KeyRight {
+			if dirView.dirView.HasFocus() {
+				app.SetFocus(fileView.fileList)
+			} else if fileView.fileList.HasFocus() {
+				app.SetFocus(buttonsView)
+			} else {
+				app.SetFocus(dirView.dirView)
+			}
+		} else if event.Key() == tcell.KeyLeft {
+			if dirView.dirView.HasFocus() {
+				app.SetFocus(buttonsView)
+			} else if fileView.fileList.HasFocus() {
+				app.SetFocus(dirView.dirView)
+			} else {
+				app.SetFocus(fileView.fileList)
+			}
 		}
 
 		return event
 	})
-
-	rootPanel := tview.NewFlex().SetDirection(tview.FlexRow)
-	rootPanel.AddItem(selectedPathView, 3, 0, false)
-	rootPanel.AddItem(selectionPanel, 0, 1, true)
 
 	app.SetRoot(rootPanel, true).EnableMouse(true).EnablePaste(true)
 	if parentApp != nil {

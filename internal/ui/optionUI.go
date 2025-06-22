@@ -4,11 +4,8 @@ import (
 	"fmt"
 	"github.com/gdamore/tcell/v2"
 	"github.com/nils/jpackageTUI/internal/option"
+	"github.com/nils/jpackageTUI/internal/ui/tvchooser"
 	"github.com/rivo/tview"
-	"os"
-	"path/filepath"
-	"sort"
-	"strings"
 )
 
 type OptionUI struct {
@@ -36,12 +33,33 @@ func NewOptionsUI(options []*option.Option) *OptionUI {
 			field = tview.NewCheckbox().
 				SetLabel(opt.GetOptionName()).
 				SetLabelColor(tcell.NewHexColor(0xd4c57b))
-		} else if opt.GetInputType() == option.File {
-			field = tview.NewInputField().
+		} else if opt.GetInputType() == option.Folder || opt.GetInputType() == option.File {
+			field = tview.NewDropDown().
 				SetLabel(opt.GetOptionName()).
-				SetLabelColor(tcell.NewHexColor(0xd4c57b)).
-				SetText("").
-				SetAutocompleteFunc(filePathAutocomplete()).SetPlaceholder("(Enter an filepath)")
+				SetOptions([]string{" "}, nil)
+
+			field.(*tview.DropDown).SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
+				if event.Key() != tcell.KeyTab && event.Key() != tcell.KeyEsc {
+					var path string
+
+					if opt.GetInputType() == option.Folder {
+						// Original code adapted from https://github.com/AEROGU/tvchooser
+						path = tvchooser.DirectoryChooser(UI.app, false)
+					} else {
+						// Original code adapted from https://github.com/AEROGU/tvchooser
+						path = tvchooser.FileChooser(UI.app, false)
+					}
+
+					if path == "" {
+						path = " "
+					}
+					field.(*tview.DropDown).SetOptions([]string{path}, nil)
+					field.(*tview.DropDown).SetCurrentOption(0)
+					field.Blur()
+				}
+
+				return event
+			})
 		} else {
 			field = tview.NewInputField().
 				SetLabel(opt.GetOptionName()).
@@ -123,89 +141,4 @@ func (optionUI *OptionUI) addFinishButton() {
 	optionUI.Form.AddButton("Finish", func() {
 		finish()
 	})
-}
-
-func filePathAutocomplete() func(currentText string) []string {
-	return func(currentText string) []string {
-		if currentText == "" {
-			return nil
-		} else if currentText == "." {
-			currDir, err := filepath.Abs(currentText)
-			if err == nil {
-				currentText = filepath.Join(currDir)
-			}
-		} else if strings.HasPrefix(currentText, "~/") {
-			homeDir, err := os.UserHomeDir()
-			if err == nil {
-				currentText = filepath.Join(homeDir, currentText[2:])
-			}
-		}
-
-		currentText = strings.ReplaceAll(currentText, "/", "\\")
-
-		dir := filepath.Dir(currentText)
-		prefix := filepath.Base(currentText)
-
-		if _, err := os.Stat(dir); err != nil {
-			return nil
-		}
-
-		entries := getMatchingEntries(dir, prefix)
-
-		for i, entry := range entries {
-			if strings.HasSuffix(currentText, string(os.PathSeparator)) {
-				entries[i] = filepath.Join(currentText, entry)
-			} else if dir == "." && !strings.Contains(currentText, string(os.PathSeparator)) {
-				entries[i] = entry
-			} else {
-				base := strings.TrimSuffix(currentText, prefix)
-				if !strings.HasSuffix(base, string(os.PathSeparator)) {
-					base += string(os.PathSeparator)
-				}
-				entries[i] = base + entry
-			}
-		}
-
-		return entries
-	}
-}
-
-func getMatchingEntries(dir, prefix string) []string {
-	dirEntries, err := os.ReadDir(dir)
-	if err != nil {
-		return nil
-	}
-
-	var matches []string
-
-	for _, entry := range dirEntries {
-		name := entry.Name()
-
-		if strings.HasPrefix(name, ".") && prefix != "." && !strings.HasPrefix(prefix, ".") {
-			continue
-		}
-
-		if strings.HasPrefix(strings.ToLower(name), strings.ToLower(prefix)) {
-			if entry.IsDir() {
-				name += string(os.PathSeparator)
-			}
-			matches = append(matches, name)
-		}
-	}
-
-	sort.Slice(matches, func(i, j int) bool {
-		isDir1 := strings.HasSuffix(matches[i], string(os.PathSeparator))
-		isDir2 := strings.HasSuffix(matches[j], string(os.PathSeparator))
-
-		if isDir1 && !isDir2 {
-			return true
-		}
-		if !isDir1 && isDir2 {
-			return false
-		}
-
-		return strings.ToLower(matches[i]) < strings.ToLower(matches[j])
-	})
-
-	return matches
 }

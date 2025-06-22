@@ -70,6 +70,16 @@ func loadGeneric() {
 			false,
 			option.Text),
 		option.NewOption(
+			"Icon",
+			"Path of the icon of the application package",
+			"--icon",
+			option.CrossPlatform,
+			true,
+			true,
+			[]string{},
+			false,
+			option.File),
+		option.NewOption(
 			"Type",
 			"Type of the result",
 			"--type",
@@ -104,7 +114,7 @@ func loadLinks() {
 			true,
 			[]string{},
 			false,
-			option.File),
+			option.Folder),
 		option.NewOption(
 			"--win-console",
 			"Creates a console launcher for the application, should be specified for application which requires console interactions",

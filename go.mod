@@ -3,6 +3,8 @@ module github.com/nils/jpackageTUI
 go 1.24
 
 require (
+	github.com/AEROGU/tvchooser v1.2.1
+	github.com/dustin/go-humanize v1.0.1
 	github.com/gdamore/tcell/v2 v2.8.1
 	github.com/rivo/tview v0.0.0-20250501113434-0c592cd31026
 	github.com/stretchr/testify v1.10.0

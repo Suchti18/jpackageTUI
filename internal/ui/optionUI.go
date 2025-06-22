@@ -128,7 +128,7 @@ func (optionUI *OptionUI) getData() map[*option.Option]string {
 
 func (optionUI *OptionUI) addBackButton() {
 	optionUI.Form.AddButton("Back", func() {
-		lastPage()
+		previousPage()
 	})
 }
 

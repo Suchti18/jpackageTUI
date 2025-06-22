@@ -57,7 +57,7 @@ func (ui *Ui) Start() error {
 	return nil
 }
 
-func lastPage() {
+func previousPage() {
 	UI.current--
 	switchPage(UI.current)
 }

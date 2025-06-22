@@ -40,6 +40,7 @@ func (ui *Ui) Start() error {
 	switchPage(ui.current)
 
 	ui.app.SetRoot(ui.pages, true)
+	ui.app.EnableMouse(true)
 
 	ui.app.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
 		if event.Key() == tcell.KeyEscape {

@@ -104,7 +104,7 @@ func newFileView(rootPath string, showHidden bool, textViewToUpdate *tview.TextV
 	}
 
 	fv.fileList.SetMainTextStyle(tcell.StyleDefault.Foreground(tcell.ColorWhite).Background(Colors.BackgroundColor))
-	fv.fileList.SetSecondaryTextStyle(tcell.StyleDefault.Foreground(tcell.ColorForestGreen).Background(Colors.BackgroundColor))
+	fv.fileList.SetSecondaryTextStyle(tcell.StyleDefault.Foreground(tcell.ColorTeal).Background(Colors.BackgroundColor))
 	fv.updatePath(rootPath)
 
 	return fv

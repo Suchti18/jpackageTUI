@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/nils/jpackageTUI/internal/exitCodes"
+	"github.com/nils/jpackageTUI/internal/Const/exitCodes"
 	"github.com/nils/jpackageTUI/internal/option"
 	"github.com/nils/jpackageTUI/internal/ui"
 	"log"

@@ -3,6 +3,7 @@ package ui
 import (
 	"fmt"
 	"github.com/gdamore/tcell/v2"
+	"github.com/nils/jpackageTUI/internal/Const/Colors"
 	"github.com/nils/jpackageTUI/internal/option"
 	"github.com/nils/jpackageTUI/internal/ui/tvchooser"
 	"github.com/rivo/tview"
@@ -27,12 +28,12 @@ func NewOptionsUI(options []*option.Option) *OptionUI {
 		if len(opt.GetPossibleOptions()) > 0 {
 			field = tview.NewDropDown().
 				SetLabel(opt.GetOptionName()).
-				SetLabelColor(tcell.NewHexColor(0xd4c57b)).
+				SetLabelColor(Colors.LabelColor).
 				SetOptions(opt.GetPossibleOptions(), func(text string, index int) {})
 		} else if opt.HasNoParameter() {
 			field = tview.NewCheckbox().
 				SetLabel(opt.GetOptionName()).
-				SetLabelColor(tcell.NewHexColor(0xd4c57b))
+				SetLabelColor(Colors.LabelColor)
 		} else if opt.GetInputType() == option.Folder || opt.GetInputType() == option.File {
 			field = tview.NewDropDown().
 				SetLabel(opt.GetOptionName()).
@@ -63,7 +64,7 @@ func NewOptionsUI(options []*option.Option) *OptionUI {
 		} else {
 			field = tview.NewInputField().
 				SetLabel(opt.GetOptionName()).
-				SetLabelColor(tcell.NewHexColor(0xd4c57b)).
+				SetLabelColor(Colors.LabelColor).
 				SetText("")
 		}
 
@@ -89,11 +90,11 @@ func NewOptionsUI(options []*option.Option) *OptionUI {
 	}
 
 	optionUI.Form.
-		SetFieldBackgroundColor(tcell.NewHexColor(0x343d46)).
-		SetButtonBackgroundColor(tcell.NewHexColor(0x343d46)).
-		SetBackgroundColor(tcell.NewHexColor(0x2b303b)).
+		SetFieldBackgroundColor(Colors.FieldBackgroundColor).
+		SetButtonBackgroundColor(Colors.ButtonBackgroundColor).
+		SetBackgroundColor(Colors.BackgroundColor).
 		SetBorder(true).
-		SetBorderColor(tcell.NewHexColor(0x8fa1b3)).
+		SetBorderColor(Colors.BorderColor).
 		SetTitle("jpackageTUI")
 
 	return optionUI

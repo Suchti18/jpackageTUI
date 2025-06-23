@@ -6,17 +6,19 @@ var (
 
 func init() {
 	langPack = map[string]string{
-		"This PC":  "This PC",
-		"Devices":  "Devices",
-		"HomeDir":  "Home",
-		"Modified": "Modified",
-		"Size":     "Size",
-		"Cancel":   "Cancel",
-		"Accept":   "Accept",
-		"Back":     "Back",
-		"Next":     "Next",
-		"Finish":   "Finish",
-		"Include":  "Include <%s>?",
+		"This PC":       "This PC",
+		"Devices":       "Devices",
+		"HomeDir":       "Home",
+		"Modified":      "Modified",
+		"Size":          "Size",
+		"Access Denied": "Access Denied",
+		"Favorites":     "Favorites",
+		"Cancel":        "Cancel",
+		"Accept":        "Accept",
+		"Back":          "Back",
+		"Next":          "Next",
+		"Finish":        "Finish",
+		"Include":       "Include <%s>?",
 	}
 }
 

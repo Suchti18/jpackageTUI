@@ -29,12 +29,10 @@ func NewOptionsUI(options []*option.Option) *OptionUI {
 		if len(opt.GetPossibleOptions()) > 0 {
 			field = tview.NewDropDown().
 				SetLabel(opt.GetOptionName()).
-				SetLabelColor(Colors.LabelColor).
 				SetOptions(opt.GetPossibleOptions(), func(text string, index int) {})
 		} else if opt.HasNoParameter() {
 			field = tview.NewCheckbox().
-				SetLabel(opt.GetOptionName()).
-				SetLabelColor(Colors.LabelColor)
+				SetLabel(opt.GetOptionName())
 		} else if opt.GetInputType() == option.Folder || opt.GetInputType() == option.File {
 			field = tview.NewDropDown().
 				SetLabel(opt.GetOptionName()).
@@ -65,13 +63,12 @@ func NewOptionsUI(options []*option.Option) *OptionUI {
 		} else {
 			field = tview.NewInputField().
 				SetLabel(opt.GetOptionName()).
-				SetLabelColor(Colors.LabelColor).
 				SetText("")
 		}
 
 		if opt.IsOptional() && !opt.HasNoParameter() {
-			checkbox := tview.NewCheckbox()
-			checkbox.SetLabel(fmt.Sprintf(resourceBundle.GetString("Include"), opt.GetOptionName()))
+			checkbox := tview.NewCheckbox().
+				SetLabel(fmt.Sprintf(resourceBundle.GetString("Include"), opt.GetOptionName()))
 
 			field.SetDisabled(true)
 

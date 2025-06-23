@@ -1,13 +1,11 @@
 package tvchooser
 
 import (
-	"github.com/AEROGU/tvchooser/mounted"
-	"github.com/AEROGU/tvchooser/tvclang"
 	"github.com/nils/jpackageTUI/internal/Const/Colors"
 	"github.com/nils/jpackageTUI/internal/Const/resourceBundle"
+	"github.com/nils/jpackageTUI/internal/ui/tvchooser/mounts"
 	"os"
 	"path/filepath"
-	"runtime"
 	"strings"
 
 	"github.com/gdamore/tcell/v2"
@@ -46,7 +44,7 @@ func (dv *directoryView) addChildDirectories(target *tview.TreeNode, path string
 	files, err := os.ReadDir(path)
 	if err != nil {
 		txt := target.GetText()
-		target.SetText(txt + " - " + tvclang.GetTranslations().AccessDenied)
+		target.SetText(txt + " - " + resourceBundle.GetString("Access Denied"))
 
 		// Avoid execution of most of onNodeSelected on this node by setting IsFinal to true
 		{
@@ -198,7 +196,7 @@ func newDirectoryView(showHidden bool, textViewToUpdate *tview.TextView, onSelec
 
 	// Add favorites node if any.
 	if len(fastAccessPaths) > 0 {
-		favoritesNode := addChildNode(rootNode, tvclang.GetTranslations().Favorites, true, nodeInfo{
+		favoritesNode := addChildNode(rootNode, resourceBundle.GetString("Favorites"), true, nodeInfo{
 			Path:     "",
 			IsRoot:   true,
 			IsCustom: true,
@@ -239,22 +237,19 @@ func newDirectoryView(showHidden bool, textViewToUpdate *tview.TextView, onSelec
 		IsCustom: true,
 	})
 
-	if runtime.GOOS == "windows" {
-		devices, err := mounted.GetWindowsDriveLetters()
-		if err != nil {
-			devicesNode.SetColor(tcell.ColorRed).
-				SetSelectable(false).
-				SetTextStyle(tcell.StyleDefault.Foreground(tcell.ColorWhite).Background(Colors.BackgroundColor))
-		} else {
-			for _, drive := range devices {
-				driveRoot := drive + ":" + string(os.PathSeparator)
-				addChildNode(devicesNode, driveRoot, false, nodeInfo{
-					Path:     driveRoot,
-					IsRoot:   true,
-					IsCustom: false,
-				})
-
-			}
+	devices, err := mounts.GetDrivesLetters()
+	if err != nil {
+		devicesNode.SetColor(tcell.ColorRed).
+			SetSelectable(false).
+			SetTextStyle(tcell.StyleDefault.Foreground(Colors.LabelColor).Background(Colors.BackgroundColor))
+	} else {
+		for _, drive := range devices {
+			driveRoot := drive + ":" + string(os.PathSeparator)
+			addChildNode(devicesNode, driveRoot, false, nodeInfo{
+				Path:     driveRoot,
+				IsRoot:   true,
+				IsCustom: false,
+			})
 		}
 	}
 

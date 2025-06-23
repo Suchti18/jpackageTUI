@@ -4,6 +4,7 @@ import (
 	"github.com/AEROGU/tvchooser/mounted"
 	"github.com/AEROGU/tvchooser/tvclang"
 	"github.com/nils/jpackageTUI/internal/Const/Colors"
+	"github.com/nils/jpackageTUI/internal/Const/resourceBundle"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -186,7 +187,7 @@ func newDirectoryView(showHidden bool, textViewToUpdate *tview.TextView, onSelec
 	tree := tview.NewTreeView()
 
 	// Add rootNode node.
-	rootNode := tview.NewTreeNode(expandedPrefix + tvclang.GetTranslations().ThisPC).
+	rootNode := tview.NewTreeNode(expandedPrefix + resourceBundle.GetString("This PC")).
 		SetTextStyle(tcell.StyleDefault.Foreground(tcell.ColorWhite).Background(Colors.BackgroundColor)).
 		SetIndent(0)
 	rootNode.SetReference(nodeInfo{
@@ -225,14 +226,14 @@ func newDirectoryView(showHidden bool, textViewToUpdate *tview.TextView, onSelec
 
 	// Add userprofile node.
 	userHomeDir, _ := os.UserHomeDir()
-	addChildNode(rootNode, tvclang.GetTranslations().HomeDir, false, nodeInfo{
+	addChildNode(rootNode, resourceBundle.GetString("HomeDir"), false, nodeInfo{
 		Path:     userHomeDir,
 		IsRoot:   true,
 		IsCustom: false,
 	})
 
 	// Add devices node.
-	devicesNode := addChildNode(rootNode, tvclang.GetTranslations().Devices, true, nodeInfo{
+	devicesNode := addChildNode(rootNode, resourceBundle.GetString("Devices"), true, nodeInfo{
 		Path:     "",
 		IsRoot:   true,
 		IsCustom: true,

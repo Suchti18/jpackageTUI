@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"github.com/gdamore/tcell/v2"
 	"github.com/nils/jpackageTUI/internal/Const/Colors"
+	"github.com/nils/jpackageTUI/internal/Const/resourceBundle"
 	"os"
 
-	"github.com/AEROGU/tvchooser/tvclang"
 	"github.com/dustin/go-humanize"
 	"github.com/rivo/tview"
 )
@@ -64,8 +64,8 @@ func (fv *fileView) updatePath(newPath string) {
 				fileInfo, err := file.Info()
 
 				if err == nil {
-					fInf := fmt.Sprintf("  %s: %s", tvclang.GetTranslations().Modfied, fileInfo.ModTime().Format("2006-01-02 15:04:05")) // Modification date
-					fInf += fmt.Sprintf(" | %s: %s", tvclang.GetTranslations().Size, humanize.Bytes(uint64(fileInfo.Size())))            // Size
+					fInf := fmt.Sprintf("  %s: %s", resourceBundle.GetString("Modified"), fileInfo.ModTime().Format("2006-01-02 15:04:05")) // Modification date
+					fInf += fmt.Sprintf(" | %s: %s", resourceBundle.GetString("Size"), humanize.Bytes(uint64(fileInfo.Size())))             // Size
 					fv.fileList.AddItem(fileInfo.Name(), fInf, 0, nil)
 				} else {
 					fv.fileList.AddItem(file.Name(), "", 0, nil)

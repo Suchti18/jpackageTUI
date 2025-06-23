@@ -1,4 +1,4 @@
-package test
+package option
 
 import (
 	"github.com/nils/jpackageTUI/internal/option"
@@ -8,9 +8,9 @@ import (
 
 func TestCorrectConversion(t *testing.T) {
 	option.ClearRepo()
-	option1 := option.NewOption("", "", "-t", option.Mac, false, false, []string{}, false)
+	option1 := option.NewOption("", "", "-t", option.Mac, false, false, []string{}, false, option.Text)
 	option.AddToRepo(option1, "app-image")
-	option2 := option.NewOption("", "", "-m", option.Mac, false, false, []string{}, false)
+	option2 := option.NewOption("", "", "-m", option.Mac, false, false, []string{}, false, option.Text)
 	option.AddToRepo(option2, "This is a test")
 
 	actual := option.CreateParameters()
@@ -21,9 +21,9 @@ func TestCorrectConversion(t *testing.T) {
 
 func TestCorrectConversionWithAOptionWithNoParameters(t *testing.T) {
 	option.ClearRepo()
-	option1 := option.NewOption("", "", "-t", option.Mac, false, false, []string{}, false)
+	option1 := option.NewOption("", "", "-t", option.Mac, false, false, []string{}, false, option.Text)
 	option.AddToRepo(option1, "app-image")
-	option2 := option.NewOption("", "", "-m", option.Mac, true, true, []string{}, true)
+	option2 := option.NewOption("", "", "-m", option.Mac, true, true, []string{}, true, option.Text)
 	option.AddToRepo(option2, "This is a test")
 
 	actual := option.CreateParameters()

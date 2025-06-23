@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gdamore/tcell/v2"
 	"github.com/nils/jpackageTUI/internal/Const/Colors"
+	"github.com/nils/jpackageTUI/internal/Const/resourceBundle"
 	"github.com/nils/jpackageTUI/internal/option"
 	"github.com/nils/jpackageTUI/internal/ui/tvchooser"
 	"github.com/rivo/tview"
@@ -70,7 +71,7 @@ func NewOptionsUI(options []*option.Option) *OptionUI {
 
 		if opt.IsOptional() && !opt.HasNoParameter() {
 			checkbox := tview.NewCheckbox()
-			checkbox.SetLabel(fmt.Sprintf("Include <%s>?", opt.GetOptionName()))
+			checkbox.SetLabel(fmt.Sprintf(resourceBundle.GetString("Include"), opt.GetOptionName()))
 
 			field.SetDisabled(true)
 
@@ -127,19 +128,19 @@ func (optionUI *OptionUI) getData() map[*option.Option]string {
 }
 
 func (optionUI *OptionUI) addBackButton() {
-	optionUI.Form.AddButton("Back", func() {
+	optionUI.Form.AddButton(resourceBundle.GetString("Back"), func() {
 		previousPage()
 	})
 }
 
 func (optionUI *OptionUI) addNextButton() {
-	optionUI.Form.AddButton("Next", func() {
+	optionUI.Form.AddButton(resourceBundle.GetString("Next"), func() {
 		nextPage()
 	})
 }
 
 func (optionUI *OptionUI) addFinishButton() {
-	optionUI.Form.AddButton("Finish", func() {
+	optionUI.Form.AddButton(resourceBundle.GetString("Finish"), func() {
 		finish()
 	})
 }

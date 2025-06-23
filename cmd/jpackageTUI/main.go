@@ -12,8 +12,8 @@ import (
 )
 
 func main() {
-	if !isjpackageInstalled() {
-		fmt.Println("jpackageTUI is not runnable. Make sure to include it in the PATH variable.")
+	if !isjpackageInstalled() && (len(os.Args) > 1 && os.Args[1] != "--force") {
+		fmt.Println("jpackage is not installed properly. Make sure to include it in the PATH variable.")
 		os.Exit(exitCodes.JpackageNotInstalled)
 	}
 

@@ -1,9 +1,9 @@
 package tvchooser
 
 import (
-	"github.com/AEROGU/tvchooser/tvclang"
 	"github.com/gdamore/tcell/v2"
 	"github.com/nils/jpackageTUI/internal/Const/Colors"
+	"github.com/nils/jpackageTUI/internal/Const/resourceBundle"
 	"github.com/rivo/tview"
 	"os"
 )
@@ -38,12 +38,12 @@ func FileChooser(parentApp *tview.Application, showHidden bool, fastAccessPaths 
 	buttonsView := tview.NewForm()
 	buttonsView.SetButtonsAlign(tview.AlignRight)
 	// Cancel button
-	buttonsView.AddButton(tvclang.GetTranslations().Cancel, func() {
+	buttonsView.AddButton(resourceBundle.GetString("Cancel"), func() {
 		selectedPath = ""
 		app.Stop()
 	})
 	// Accept button
-	buttonsView.AddButton(tvclang.GetTranslations().Accept, func() {
+	buttonsView.AddButton(resourceBundle.GetString("Accept"), func() {
 		selectedPath = selectedPathView.GetText(false)
 		//if selected path ends with PathSeparator, is a directory, so set selected path to ""
 		if len(selectedPath) > 0 && selectedPath[len(selectedPath)-1] == os.PathSeparator {
@@ -128,13 +128,13 @@ func DirectoryChooser(parentApp *tview.Application, showHidden bool, fastAccessP
 	buttonsView.SetButtonsAlign(tview.AlignRight)
 
 	// Cancel button
-	buttonsView.AddButton(tvclang.GetTranslations().Cancel, func() {
+	buttonsView.AddButton(resourceBundle.GetString("Cancel"), func() {
 		selectedPath = ""
 		app.Stop()
 	})
 
 	// Accept button
-	buttonsView.AddButton(tvclang.GetTranslations().Accept, func() {
+	buttonsView.AddButton(resourceBundle.GetString("Accept"), func() {
 		selectedPath = dirView.selectedPath
 		app.Stop()
 	})

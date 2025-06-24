@@ -20,6 +20,7 @@ var (
 )
 
 func LoadAll() {
+	option.GetOptions()
 	loadGeneric()
 	loadLinks()
 

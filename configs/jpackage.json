@@ -1,3 +1,19 @@
 {
+  "Generic": {
+    "options": {
+      "Type": {
+        "command": "--type",
+        "description": "The type of package to create"
+      },
+      "App Version": {
+        "command": "--app-version",
+        "description": "Version of the application and/or package"
+      }
+    }
+  },
+  "OptionsForCreatingTheRuntimeImage": {
+    "options": {
 
+    }
+  }
 }

@@ -8,6 +8,7 @@ import (
 	"github.com/nils/jpackageTUI/internal/option"
 	"github.com/nils/jpackageTUI/internal/ui/tvchooser"
 	"github.com/rivo/tview"
+	"os"
 )
 
 type OptionUI struct {
@@ -42,12 +43,15 @@ func NewOptionsUI(options []*option.Option) *OptionUI {
 				if event.Key() != tcell.KeyTab && event.Key() != tcell.KeyEsc {
 					var path string
 
+					currDir, _ := os.Getwd()
 					if opt.GetInputType() == option.Folder {
 						// Original code adapted from https://github.com/AEROGU/tvchooser
-						path = tvchooser.DirectoryChooser(UI.app, false)
+						path = tvchooser.DirectoryChooser(UI.app, false,
+							currDir+"|Current directory")
 					} else {
 						// Original code adapted from https://github.com/AEROGU/tvchooser
-						path = tvchooser.FileChooser(UI.app, false)
+						path = tvchooser.FileChooser(UI.app, false,
+							currDir+"|Current directory")
 					}
 
 					if path == "" {
@@ -94,6 +98,8 @@ func NewOptionsUI(options []*option.Option) *OptionUI {
 		SetBorder(true).
 		SetBorderColor(Colors.BorderColor).
 		SetTitle("jpackageTUI")
+
+	optionUI.Form.SetLabelColor(Colors.LabelColor)
 
 	return optionUI
 }

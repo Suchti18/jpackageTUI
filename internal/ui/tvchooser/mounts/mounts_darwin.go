@@ -1,6 +1,3 @@
-//go:build darwin
-// +build darwin
-
 package mounts
 
 import (
@@ -12,15 +9,15 @@ import (
 func GetDrivesLetters() ([]string, error) {
 	volumesPath := "/Volumes"
 
-	// Überprüfen, ob das Verzeichnis existiert
+	// Check if the folder exist
 	if _, err := os.Stat(volumesPath); os.IsNotExist(err) {
-		return nil, fmt.Errorf("Verzeichnis %s existiert nicht", volumesPath)
+		return nil, fmt.Errorf("<%s> does not exist", volumesPath)
 	}
 
-	// Liste der Laufwerke abrufen
+	// Reading all connected drives
 	files, err := os.ReadDir(volumesPath)
 	if err != nil {
-		return nil, fmt.Errorf("Fehler beim Lesen des Verzeichnisses %s: %w", volumesPath, err)
+		return nil, fmt.Errorf("error while reading folder <%s>: <%w>", volumesPath, err)
 	}
 
 	var drives []string

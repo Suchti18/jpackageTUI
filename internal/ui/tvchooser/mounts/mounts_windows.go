@@ -1,5 +1,3 @@
-//go:build windows
-
 package mounts
 
 import (
@@ -10,7 +8,7 @@ import (
 func GetDrivesLetters() ([]string, error) {
 	drivesBitmask, err := windows.GetLogicalDrives()
 	if err != nil {
-		return nil, fmt.Errorf("Fehler beim Abrufen der Laufwerksinformationen: %w", err)
+		return nil, fmt.Errorf("Error while retrieving Drives <%w>", err)
 	}
 
 	var drives []string

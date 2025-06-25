@@ -47,11 +47,11 @@ func NewOptionsUI(options []*option.Option) *OptionUI {
 					if opt.GetInputType() == option.Folder {
 						// Original code adapted from https://github.com/AEROGU/tvchooser
 						path = tvchooser.DirectoryChooser(UI.app, false,
-							currDir+"|Current directory")
+							currDir+"|"+resourceBundle.GetString("CurrentDir"))
 					} else {
 						// Original code adapted from https://github.com/AEROGU/tvchooser
 						path = tvchooser.FileChooser(UI.app, false,
-							currDir+"|Current directory")
+							currDir+"|"+resourceBundle.GetString("CurrentDir"))
 					}
 
 					if path == "" {

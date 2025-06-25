@@ -9,6 +9,7 @@ func init() {
 		"This PC":       "This PC",
 		"Devices":       "Devices",
 		"HomeDir":       "Home",
+		"CurrentDir":    "Current Directory",
 		"Modified":      "Modified",
 		"Size":          "Size",
 		"Access Denied": "Access Denied",

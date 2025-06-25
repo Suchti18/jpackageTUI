@@ -9,6 +9,7 @@ func init() {
 		"This PC":       "Dieser PC",
 		"Devices":       "Geräte",
 		"HomeDir":       "Hauptverzeichnis",
+		"CurrentDir":    "Aktuelles Verzeichnis",
 		"Modified":      "Bearbeitet am",
 		"Size":          "Größe",
 		"Access Denied": "Zugriff verweigert",

@@ -38,7 +38,7 @@ func NewOptionsUI(options []*option.Option) *OptionUI {
 				SetOptions([]string{" "}, nil)
 
 			field.(*tview.DropDown).SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
-				if event.Key() != tcell.KeyTab && event.Key() != tcell.KeyEsc {
+				if event.Key() == tcell.KeyEnter {
 					var path string
 
 					currDir, _ := os.Getwd()
@@ -57,10 +57,11 @@ func NewOptionsUI(options []*option.Option) *OptionUI {
 					}
 					field.(*tview.DropDown).SetOptions([]string{path}, nil)
 					field.(*tview.DropDown).SetCurrentOption(0)
-					field.Blur()
+				} else if event.Key() == tcell.KeyTab {
+					return event
 				}
 
-				return event
+				return nil
 			})
 		} else {
 			field = tview.NewInputField().

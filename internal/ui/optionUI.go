@@ -12,16 +12,14 @@ import (
 )
 
 type OptionUI struct {
-	Form    *tview.Form
-	Fields  map[*option.Option]tview.Primitive
-	Summary map[string]string
+	Form   *tview.Form
+	Fields map[*option.Option]tview.Primitive
 }
 
 func NewOptionsUI(options []*option.Option) *OptionUI {
 	optionUI := &OptionUI{
-		Form:    tview.NewForm(),
-		Fields:  make(map[*option.Option]tview.Primitive),
-		Summary: make(map[string]string),
+		Form:   tview.NewForm(),
+		Fields: make(map[*option.Option]tview.Primitive),
 	}
 
 	for _, opt := range options {

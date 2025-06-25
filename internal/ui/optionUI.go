@@ -12,14 +12,22 @@ import (
 )
 
 type OptionUI struct {
-	Form   *tview.Form
-	Fields map[*option.Option]tview.Primitive
+	RootPanel        *tview.Flex
+	FormPanel        *tview.Flex
+	Form             *tview.Form
+	DescriptionPanel *tview.TextView
+	ButtonView       *tview.Form
+	Fields           map[*option.Option]tview.Primitive
 }
 
 func NewOptionsUI(options []*option.Option) *OptionUI {
 	optionUI := &OptionUI{
-		Form:   tview.NewForm(),
-		Fields: make(map[*option.Option]tview.Primitive),
+		RootPanel:        tview.NewFlex(),
+		FormPanel:        tview.NewFlex(),
+		Form:             tview.NewForm(),
+		DescriptionPanel: tview.NewTextView(),
+		ButtonView:       tview.NewForm(),
+		Fields:           make(map[*option.Option]tview.Primitive),
 	}
 
 	for _, opt := range options {
@@ -67,6 +75,9 @@ func NewOptionsUI(options []*option.Option) *OptionUI {
 			field = tview.NewInputField().
 				SetLabel(opt.GetOptionName()).
 				SetText("")
+			field.(*tview.InputField).SetFocusFunc(func() {
+				optionUI.DescriptionPanel.SetText(opt.GetOptionDesc())
+			})
 		}
 
 		if opt.IsOptional() && !opt.HasNoParameter() {
@@ -90,21 +101,47 @@ func NewOptionsUI(options []*option.Option) *OptionUI {
 		optionUI.Fields[opt] = field
 	}
 
-	optionUI.Form.
-		SetFieldBackgroundColor(Colors.FieldBackgroundColor).
-		SetButtonBackgroundColor(Colors.ButtonBackgroundColor).
+	// Root settings
+	optionUI.RootPanel.AddItem(optionUI.FormPanel, 0, 1, false)
+	optionUI.RootPanel.AddItem(optionUI.ButtonView, 1, 0, false)
+	optionUI.RootPanel.
+		SetDirection(tview.FlexRow).
 		SetBackgroundColor(Colors.BackgroundColor).
 		SetBorder(true).
 		SetBorderColor(Colors.BorderColor).
 		SetTitle("jpackageTUI")
 
-	optionUI.Form.SetLabelColor(Colors.LabelColor)
+	// FormPanel settings
+	optionUI.FormPanel.AddItem(optionUI.Form, 0, 1, false)
+	optionUI.FormPanel.AddItem(optionUI.DescriptionPanel, 0, 1, false)
+
+	// Main Form settings
+	optionUI.Form.
+		SetFieldBackgroundColor(Colors.FieldBackgroundColor).
+		SetBackgroundColor(Colors.BackgroundColor)
+
+	optionUI.Form.
+		SetLabelColor(Colors.LabelColor)
+
+	// DescriptionPanel settings
+	optionUI.DescriptionPanel.
+		SetTextColor(Colors.LabelColor).
+		SetBackgroundColor(Colors.BackgroundColor).
+		SetBorderPadding(1, 1, 1, 1)
+
+	// ButtonView Settings
+	optionUI.ButtonView.
+		SetButtonBackgroundColor(Colors.ButtonBackgroundColor).
+		SetBackgroundColor(Colors.BackgroundColor).
+		SetBorderPadding(0, 0, 1, 1)
+
+	optionUI.ButtonView.SetButtonsAlign(tview.AlignRight)
 
 	return optionUI
 }
 
 func (optionUI *OptionUI) GetPrimitive() tview.Primitive {
-	return optionUI.Form
+	return optionUI.RootPanel
 }
 
 func (optionUI *OptionUI) getData() map[*option.Option]string {
@@ -130,19 +167,19 @@ func (optionUI *OptionUI) getData() map[*option.Option]string {
 }
 
 func (optionUI *OptionUI) addBackButton() {
-	optionUI.Form.AddButton(resourceBundle.GetString("Back"), func() {
+	optionUI.ButtonView.AddButton(resourceBundle.GetString("Back"), func() {
 		previousPage()
 	})
 }
 
 func (optionUI *OptionUI) addNextButton() {
-	optionUI.Form.AddButton(resourceBundle.GetString("Next"), func() {
+	optionUI.ButtonView.AddButton(resourceBundle.GetString("Next"), func() {
 		nextPage()
 	})
 }
 
 func (optionUI *OptionUI) addFinishButton() {
-	optionUI.Form.AddButton(resourceBundle.GetString("Finish"), func() {
+	optionUI.ButtonView.AddButton(resourceBundle.GetString("Finish"), func() {
 		finish()
 	})
 }

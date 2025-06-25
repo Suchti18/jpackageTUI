@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/nils/jpackageTUI/internal/Const/exitCodes"
+	"github.com/nils/jpackageTUI/internal/Const/resourceBundle"
 	"github.com/nils/jpackageTUI/internal/option"
 	"github.com/nils/jpackageTUI/internal/ui"
 	"log"
@@ -13,7 +14,7 @@ import (
 
 func main() {
 	if !isjpackageInstalled() && (len(os.Args) > 1 && os.Args[1] != "--force") {
-		fmt.Println("jpackage is not installed properly. Make sure to include it in the PATH variable.")
+		fmt.Println(resourceBundle.GetString("JpackageNotInstalled"))
 		os.Exit(exitCodes.JpackageNotInstalled)
 	}
 
@@ -66,6 +67,6 @@ func runjpackageCommand(parameters []string) {
 	if err := cmd.Run(); err != nil {
 		log.Fatal(err)
 	} else {
-		fmt.Println("Command finished successfully")
+		fmt.Println(resourceBundle.GetString("SuccessfulExit"))
 	}
 }

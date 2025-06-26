@@ -145,6 +145,8 @@ func DirectoryChooser(parentApp *tview.Application, showHidden bool, fastAccessP
 		app.Stop()
 	})
 
+	buttonsView.SetButtonBackgroundColor(Colors.ButtonBackgroundColor)
+
 	app.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
 		if event.Key() == tcell.KeyEsc {
 			selectedPath = ""

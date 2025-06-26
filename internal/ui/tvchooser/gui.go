@@ -52,6 +52,8 @@ func FileChooser(parentApp *tview.Application, showHidden bool, fastAccessPaths 
 		app.Stop()
 	})
 
+	buttonsView.SetButtonBackgroundColor(Colors.ButtonBackgroundColor)
+
 	rootPanel := tview.NewFlex().
 		SetDirection(tview.FlexRow).
 		AddItem(selectedPathView, 3, 0, false).

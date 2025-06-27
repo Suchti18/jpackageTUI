@@ -14,7 +14,7 @@ functionality to streamline simple tasks.
 
 
 ## Installation
-You can install it by [building](#Building) it yourself or by downloading the newest release
+You can install it by either [building](#building) it yourself or downloading the latest release.
 
 ## Usage
 
@@ -29,23 +29,42 @@ Run the jpackageTUI executable file by typing:
 
 ### ⌨️ Keybindings
 
-| Keybinding   | Description                   |
-|--------------|-------------------------------|
-| `esc`        | Quit the program              |
-| `tab`        | Move between the input fields |
-| `enter`      | Select                        |
-| `down arrow` | Move down in a dropdown field |
-| `up arrow`   | Move up in a dropdown field   |
+| Keybinding      | Description                              |
+|-----------------|------------------------------------------|
+| `esc`           | Quit the program / Quit file selection   |
+| `tab`           | Move to the next input field             |
+| `shift` + `tab` | Move to the previous input field         |
+| `enter`         | Select                                   |
+| `down arrow`    | Move down in a dropdown/tree/list field  |
+| `up arrow`      | Move up in a dropdown/tree/list field    |
+| `right arrow`   | Move to the next file selector field     |
+| `left arrow`    | Move to the previous file selector field |
 
-### Example Output
+Note: Fields can also be interacted with using the mouse.
+
+### ⚙️ Arguments
+
+```bash
+.\jpackageTUI.exe [options]
+```
+
+| Option    | Description                              |
+|-----------|------------------------------------------|
+| `--force` | Skips the check if jpackage is installed |
+
+### 🖥️ Example Output
 
 Below is a sample of what the TUI looks like when running:
 
 [![jpackageTUI Screenshot](./.github/sample.png)](#Installation)
 
+### 🚧 Known Limitations
+
+Currently, jpackageTUI supports only a subset of the `jpackage` options:
+
 ---
 
-## Building
+## 🛠️ Building
 
 ### Requirements
 
@@ -55,8 +74,7 @@ Below is a sample of what the TUI looks like when running:
 ### System Requirements
 
 * Windows (tested on Windows 11)
-* ~~Linux (Tested on Ubuntu)~~
-* ~~MacOS (Tested on MacOS Sequoia 15.5)~~
+* MacOS (Tested on MacOS Sequoia 15.5)
 
 ### Instructions
 
@@ -73,11 +91,11 @@ Below is a sample of what the TUI looks like when running:
     go build .\cmd\jpackageTUI\
     ```
    
-After running `go build` an executable file was generated in the project folder.
+After running `go build`, an executable file will be generated in the project folder.
 
 ---
 
-## AI Disclaimer
+## 🤖 AI Disclaimer
 
 AI helped in following areas:
 * Debugging
@@ -85,6 +103,11 @@ AI helped in following areas:
 
 ---
 
-## License
+## 🔗 Additional Resources
+- [jpackage Documentation](https://docs.oracle.com/en/java/javase/17/docs/specs/man/jpackage.html)
+
+---
+
+## 📜 License
 
 [Unlicense](https://unlicense.org)

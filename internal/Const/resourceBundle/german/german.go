@@ -21,6 +21,8 @@ func init() {
 		"Finish":               "Fertig",
 		"Include":              "<%s> hinzufügen?",
 		"JpackageNotInstalled": "jpackage wurde nicht korrekt in die PATH-Variable eingebunden.",
+		"SkipjpackageCheck":    "jpackage Check übersprungen",
+		"SuccessfulExit":       "jpackage wurde mit deinen Optionen ausgeführt",
 	}
 }
 

@@ -13,7 +13,9 @@ import (
 )
 
 func main() {
-	if !isjpackageInstalled() && (len(os.Args) > 1 && os.Args[1] != "--force") {
+	if len(os.Args) > 1 && os.Args[1] == "--force" {
+		fmt.Println(resourceBundle.GetString("SkipjpackageCheck"))
+	} else if !isjpackageInstalled() {
 		fmt.Println(resourceBundle.GetString("JpackageNotInstalled"))
 		os.Exit(exitCodes.JpackageNotInstalled)
 	}

@@ -21,6 +21,7 @@ func init() {
 		"Finish":               "Finish",
 		"Include":              "Include <%s>?",
 		"JpackageNotInstalled": "jpackage is not installed properly. Make sure to include it in the PATH variable.",
+		"SkipjpackageCheck":    "Skipping jpackage check",
 		"SuccessfulExit":       "Command finished successfully",
 	}
 }

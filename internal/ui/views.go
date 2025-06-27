@@ -20,7 +20,6 @@ var (
 )
 
 func LoadAll() {
-	option.GetOptions()
 	loadGeneric()
 	loadLinks()
 
@@ -61,6 +60,16 @@ func loadGeneric() {
 			false,
 			option.Text),
 		option.NewOption(
+			"Vendor",
+			"Vendor of the application",
+			"--vendor",
+			option.CrossPlatform,
+			true,
+			true,
+			[]string{},
+			false,
+			option.Text),
+		option.NewOption(
 			"Description",
 			"Description of the application",
 			"--description",
@@ -82,7 +91,7 @@ func loadGeneric() {
 			option.File),
 		option.NewOption(
 			"Type",
-			"Type of the result",
+			"The type of package to create\n\nValid values are: {\"app-image\", \"exe\", \"msi\", \"rpm\", \"deb\", \"pkg\", \"dmg\"}\n\nIf this option is not specified a platform dependent default type will be created.\n",
 			"--type",
 			option.CrossPlatform,
 			true,
@@ -90,7 +99,27 @@ func loadGeneric() {
 			typeOptions,
 			false,
 			option.Text),
-	})
+		option.NewOption(
+			"Temp",
+			"Path of a new or empty directory used to create temporary files\n\nIf specified, the temp dir will not be removed upon the task completion and must be removed manually.\n\nIf not specified, a temporary directory will be created and removed upon the task completion.\n",
+			"--temp",
+			option.CrossPlatform,
+			true,
+			true,
+			[]string{},
+			false,
+			option.Folder),
+		option.NewOption(
+			"Destination",
+			"Path where generated output file is placed\n\nDefaults to the current working directory.",
+			"--dest",
+			option.CrossPlatform,
+			true,
+			true,
+			[]string{},
+			false,
+			option.Folder),
+	}, "Generic Options")
 	genericOptionUI.addNextButton()
 }
 
@@ -126,7 +155,7 @@ func loadLinks() {
 			[]string{},
 			true,
 			option.Text),
-	})
+	}, "Options for creating the runtime image")
 	linkOptionUI.addBackButton()
 	linkOptionUI.addFinishButton()
 }

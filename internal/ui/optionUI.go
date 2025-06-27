@@ -20,7 +20,7 @@ type OptionUI struct {
 	Fields           map[*option.Option]tview.Primitive
 }
 
-func NewOptionsUI(options []*option.Option) *OptionUI {
+func NewOptionsUI(options []*option.Option, title string) *OptionUI {
 	optionUI := &OptionUI{
 		RootPanel:        tview.NewFlex(),
 		FormPanel:        tview.NewFlex(),
@@ -163,8 +163,12 @@ func NewOptionsUI(options []*option.Option) *OptionUI {
 		return event
 	})
 
+	formFrame := tview.NewFrame(optionUI.Form)
+	formFrame.AddText(title, true, tview.AlignCenter, Colors.LabelColor)
+	formFrame.SetBackgroundColor(Colors.BackgroundColor)
+
 	// FormPanel settings
-	optionUI.FormPanel.AddItem(optionUI.Form, 0, 1, true)
+	optionUI.FormPanel.AddItem(formFrame, 0, 2, true)
 	optionUI.FormPanel.AddItem(optionUI.DescriptionPanel, 0, 1, false)
 
 	// Main Form settings

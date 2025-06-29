@@ -254,3 +254,18 @@ func loadMacOptions() {
 			option.Text),
 	}, "macOS platform options")
 }
+
+func loadLinuxOptions() {
+	linkOptionUI = NewOptionsUI([]*option.Option{
+		option.NewOption(
+			"Linux package name",
+			"Name for Linux package\n\nDefaults to the application name.",
+			"--linux-package-name",
+			option.Linux,
+			true,
+			true,
+			[]string{},
+			false,
+			option.Text),
+	}, "Linux platform options")
+}

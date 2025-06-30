@@ -255,6 +255,96 @@ func loadMacOptions() {
 	}, "macOS platform options")
 }
 
+func loadCreatingAppPackageOptions() {
+	linkOptionUI = NewOptionsUI([]*option.Option{
+		option.NewOption(
+			"About URL",
+			"URL of the application's home page",
+			"--about-url",
+			option.CrossPlatform,
+			true,
+			true,
+			[]string{},
+			false,
+			option.Text),
+		option.NewOption(
+			"App image location",
+			"Location of the predefined application image that is used to build an installable package\n\nSee create-app-image mode options to create the application image.",
+			"--app-image",
+			option.CrossPlatform,
+			true,
+			true,
+			[]string{},
+			false,
+			option.Folder),
+		option.NewOption(
+			"File associations properties",
+			"Path to a Properties file that contains list of key, value pairs (absolute path or relative to the current directory)\n\nThe keys \"extension\", \"mime-type\", \"icon\", and \"description\" can be used to describe the association.",
+			"--file-associations",
+			option.CrossPlatform,
+			true,
+			false,
+			[]string{},
+			false,
+			option.File),
+		option.NewOption(
+			"Install directory",
+			"Absolute path of the installation directory of the application (on macos or linux), or relative sub-path of the installation directory such as \"Program Files\" or \"AppData\" (on Windows)",
+			"--install-dir",
+			option.CrossPlatform,
+			true,
+			false,
+			[]string{},
+			false,
+			option.Folder),
+		option.NewOption(
+			"License file",
+			"Path to the license file",
+			"--license-file",
+			option.CrossPlatform,
+			true,
+			false,
+			[]string{},
+			false,
+			option.File),
+		option.NewOption(
+			"Override resources",
+			"Path to override jpackage resources\n\nIcons, template files, and other resources of jpackage can be over-ridden by adding replacement resources to this directory.",
+			"--resource-dir",
+			option.CrossPlatform,
+			true,
+			false,
+			[]string{},
+			false,
+			option.Folder),
+		option.NewOption(
+			"Predefined runtime image",
+			"Path of the predefined runtime image to install\n\nOption is required when creating a runtime installer.",
+			"--runtime-image",
+			option.CrossPlatform,
+			true,
+			false,
+			[]string{},
+			false,
+			option.Folder),
+	}, "Options for creating the application package")
+}
+
+func loadWindowsOptions() {
+	linkOptionUI = NewOptionsUI([]*option.Option{
+		option.NewOption(
+			"Add directory dialog",
+			"Adds a dialog to enable the user to choose a directory in which the product is installed.",
+			"--win-dir-chooser",
+			option.Win,
+			true,
+			true,
+			[]string{},
+			true,
+			option.Text),
+	}, "Windows platform options")
+}
+
 func loadLinuxOptions() {
 	linkOptionUI = NewOptionsUI([]*option.Option{
 		option.NewOption(

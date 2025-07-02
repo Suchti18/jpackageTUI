@@ -48,10 +48,10 @@ Note: Fields can also be interacted with using the mouse.
 .\jpackageTUI.exe [options]
 ```
 
-| Option             | Description                              |
-|--------------------|------------------------------------------|
-| `--force` / `-f`   | Skips the check if jpackage is installed |
-| `--verbose` / `-v` | Adds all jpackage Options to the  Form   |
+| Option    | Description                              |
+|-----------|------------------------------------------|
+| `--force` | Skips the check if jpackage is installed |
+| `--all`   | Adds all jpackage Options to the  Form   |
 
 ### 🖥️ Example Output
 

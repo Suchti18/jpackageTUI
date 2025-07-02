@@ -1,8 +1,8 @@
 package tvchooser
 
 import (
-	"github.com/nils/jpackageTUI/internal/Const/Colors"
-	"github.com/nils/jpackageTUI/internal/Const/resourceBundle"
+	"github.com/nils/jpackageTUI/internal/const/colors"
+	"github.com/nils/jpackageTUI/internal/const/resourceBundle"
 	"github.com/nils/jpackageTUI/internal/ui/tvchooser/mounts"
 	"os"
 	"path/filepath"
@@ -74,7 +74,7 @@ func (dv *directoryView) addChildDirectories(target *tview.TreeNode, path string
 			IsCustom: false,
 		})
 
-		node.SetTextStyle(tcell.StyleDefault.Foreground(tcell.ColorTeal).Background(Colors.BackgroundColor))
+		node.SetTextStyle(tcell.StyleDefault.Foreground(tcell.ColorTeal).Background(colors.BackgroundColor))
 		node.SetIndent(1)
 
 		target.AddChild(node)
@@ -149,7 +149,7 @@ func (dv *directoryView) onNodeSelected(node *tview.TreeNode) {
 			info.IsFinal = true
 			node.SetReference(info)
 
-			node.SetTextStyle(tcell.StyleDefault.Foreground(tcell.ColorWhite).Background(Colors.BackgroundColor))
+			node.SetTextStyle(tcell.StyleDefault.Foreground(tcell.ColorWhite).Background(colors.BackgroundColor))
 
 			return
 		}
@@ -171,7 +171,7 @@ func (dv *directoryView) onNodeSelected(node *tview.TreeNode) {
 		node.SetText(collapsedPrefix + txt)
 	}
 
-	node.SetTextStyle(tcell.StyleDefault.Foreground(tcell.ColorWhite).Background(Colors.BackgroundColor))
+	node.SetTextStyle(tcell.StyleDefault.Foreground(tcell.ColorWhite).Background(colors.BackgroundColor))
 }
 
 // newDirectoryView creates a new directory view with the specified showHidden flag.
@@ -186,7 +186,7 @@ func newDirectoryView(showHidden bool, textViewToUpdate *tview.TextView, onSelec
 
 	// Add rootNode node.
 	rootNode := tview.NewTreeNode(expandedPrefix + resourceBundle.GetString("This PC")).
-		SetTextStyle(tcell.StyleDefault.Foreground(tcell.ColorWhite).Background(Colors.BackgroundColor)).
+		SetTextStyle(tcell.StyleDefault.Foreground(tcell.ColorWhite).Background(colors.BackgroundColor)).
 		SetIndent(0)
 	rootNode.SetReference(nodeInfo{
 		Path:     "",
@@ -241,7 +241,7 @@ func newDirectoryView(showHidden bool, textViewToUpdate *tview.TextView, onSelec
 	if err != nil {
 		devicesNode.SetColor(tcell.ColorRed).
 			SetSelectable(false).
-			SetTextStyle(tcell.StyleDefault.Foreground(Colors.LabelColor).Background(Colors.BackgroundColor))
+			SetTextStyle(tcell.StyleDefault.Foreground(colors.LabelColor).Background(colors.BackgroundColor))
 	} else {
 		for _, drive := range devices {
 			driveRoot := drive + ":" + string(os.PathSeparator)
@@ -279,9 +279,9 @@ func addChildNode(rootNode *tview.TreeNode, nodeName string, expanded bool, info
 	}
 
 	newNode := tview.NewTreeNode(prefix + nodeName).SetReference(info)
-	newNode.SetTextStyle(tcell.StyleDefault.Foreground(tcell.ColorWhite).Background(Colors.BackgroundColor))
+	newNode.SetTextStyle(tcell.StyleDefault.Foreground(tcell.ColorWhite).Background(colors.BackgroundColor))
 	rootNode.AddChild(newNode)
-	rootNode.SetTextStyle(tcell.StyleDefault.Foreground(tcell.ColorWhite).Background(Colors.BackgroundColor))
+	rootNode.SetTextStyle(tcell.StyleDefault.Foreground(tcell.ColorWhite).Background(colors.BackgroundColor))
 
 	return newNode
 }

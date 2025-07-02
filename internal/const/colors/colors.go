@@ -1,4 +1,4 @@
-package Colors
+package colors
 
 import "github.com/gdamore/tcell/v2"
 

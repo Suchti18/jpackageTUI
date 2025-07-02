@@ -1,6 +1,10 @@
 package ui
 
-import "github.com/nils/jpackageTUI/internal/option"
+import (
+	"github.com/nils/jpackageTUI/internal/const/args"
+	"github.com/nils/jpackageTUI/internal/option"
+	"runtime"
+)
 
 const (
 	appImage = "app-image"
@@ -13,17 +17,38 @@ const (
 )
 
 var (
-	genericOptionUI *OptionUI
-	linkOptionUI    *OptionUI
+	genericOptionUI    *OptionUI
+	linkOptionUI       *OptionUI
+	macOptionUI        *OptionUI
+	linuxOptionUI      *OptionUI
+	windowsOptionUI    *OptionUI
+	appPackageOptionUI *OptionUI
 
 	typeOptions = []string{appImage, exe, msi, rpm, deb, pkg, dmg}
 )
 
 func LoadAll() {
 	loadGeneric()
-	loadLinks()
-
 	UI.optionUIs = append(UI.optionUIs, genericOptionUI)
+
+	// Add additional options if the add argument is set
+	if args.HasArg(args.AllArg) {
+		loadCreatingAppPackageOptions()
+		UI.optionUIs = append(UI.optionUIs, appPackageOptionUI)
+
+		if runtime.GOOS == "windows" {
+			loadWindowsOptions()
+			UI.optionUIs = append(UI.optionUIs, windowsOptionUI)
+		} else if runtime.GOOS == "darwin" {
+			loadMacOptions()
+			UI.optionUIs = append(UI.optionUIs, macOptionUI)
+		} else if runtime.GOOS == "linux" {
+			loadLinuxOptions()
+			UI.optionUIs = append(UI.optionUIs, linuxOptionUI)
+		}
+	}
+
+	loadLinks()
 	UI.optionUIs = append(UI.optionUIs, linkOptionUI)
 }
 
@@ -251,7 +276,7 @@ func loadLinks() {
 }
 
 func loadMacOptions() {
-	linkOptionUI = NewOptionsUI([]*option.Option{
+	macOptionUI = NewOptionsUI([]*option.Option{
 		option.NewOption(
 			"Mac package identifier",
 			"An identifier that uniquely identifies the application for macOS\n\nDefaults to the the main class name.\n\nMay only use alphanumeric (A-Z,a-z,0-9), hyphen (-), and period (.) characters.\n",
@@ -343,10 +368,12 @@ func loadMacOptions() {
 			false,
 			option.Text),
 	}, "macOS platform options")
+	macOptionUI.addBackButton()
+	macOptionUI.addNextButton()
 }
 
 func loadCreatingAppPackageOptions() {
-	linkOptionUI = NewOptionsUI([]*option.Option{
+	appPackageOptionUI = NewOptionsUI([]*option.Option{
 		option.NewOption(
 			"About URL",
 			"URL of the application's home page",
@@ -418,10 +445,12 @@ func loadCreatingAppPackageOptions() {
 			false,
 			option.Folder),
 	}, "Options for creating the application package")
+	appPackageOptionUI.addBackButton()
+	appPackageOptionUI.addNextButton()
 }
 
 func loadWindowsOptions() {
-	linkOptionUI = NewOptionsUI([]*option.Option{
+	windowsOptionUI = NewOptionsUI([]*option.Option{
 		option.NewOption(
 			"Add directory dialog",
 			"Adds a dialog to enable the user to choose a directory in which the product is installed.",
@@ -513,10 +542,12 @@ func loadWindowsOptions() {
 			false,
 			option.Text),
 	}, "Windows platform options")
+	windowsOptionUI.addBackButton()
+	windowsOptionUI.addNextButton()
 }
 
 func loadLinuxOptions() {
-	linkOptionUI = NewOptionsUI([]*option.Option{
+	linuxOptionUI = NewOptionsUI([]*option.Option{
 		option.NewOption(
 			"Linux package name",
 			"Name for Linux package\n\nDefaults to the application name.",
@@ -598,4 +629,6 @@ func loadLinuxOptions() {
 			true,
 			option.Text),
 	}, "Linux platform options")
+	linuxOptionUI.addBackButton()
+	linuxOptionUI.addNextButton()
 }

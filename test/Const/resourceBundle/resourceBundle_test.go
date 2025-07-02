@@ -1,7 +1,7 @@
 package resourceBundle
 
 import (
-	"github.com/nils/jpackageTUI/internal/Const/resourceBundle"
+	"github.com/nils/jpackageTUI/internal/const/resourceBundle"
 	"github.com/stretchr/testify/assert"
 	"golang.org/x/text/language"
 	"testing"

@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/nils/jpackageTUI/internal/Const/exitCodes"
-	"github.com/nils/jpackageTUI/internal/Const/resourceBundle"
+	"github.com/nils/jpackageTUI/internal/const/args"
+	"github.com/nils/jpackageTUI/internal/const/exitCodes"
+	"github.com/nils/jpackageTUI/internal/const/resourceBundle"
 	"github.com/nils/jpackageTUI/internal/option"
 	"github.com/nils/jpackageTUI/internal/ui"
 	"log"
@@ -13,7 +14,7 @@ import (
 )
 
 func main() {
-	if len(os.Args) > 1 && os.Args[1] == "--force" {
+	if args.HasArg(args.ForceArg) {
 		fmt.Println(resourceBundle.GetString("SkipjpackageCheck"))
 	} else if !isjpackageInstalled() {
 		fmt.Println(resourceBundle.GetString("JpackageNotInstalled"))

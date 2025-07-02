@@ -3,8 +3,8 @@ package ui
 import (
 	"fmt"
 	"github.com/gdamore/tcell/v2"
-	"github.com/nils/jpackageTUI/internal/Const/Colors"
-	"github.com/nils/jpackageTUI/internal/Const/resourceBundle"
+	"github.com/nils/jpackageTUI/internal/const/colors"
+	"github.com/nils/jpackageTUI/internal/const/resourceBundle"
 	"github.com/nils/jpackageTUI/internal/option"
 	"github.com/nils/jpackageTUI/internal/ui/tvchooser"
 	"github.com/rivo/tview"
@@ -122,9 +122,9 @@ func NewOptionsUI(options []*option.Option, title string) *OptionUI {
 	optionUI.RootPanel.AddItem(optionUI.ButtonView, 1, 0, false)
 	optionUI.RootPanel.
 		SetDirection(tview.FlexRow).
-		SetBackgroundColor(Colors.BackgroundColor).
+		SetBackgroundColor(colors.BackgroundColor).
 		SetBorder(true).
-		SetBorderColor(Colors.BorderColor).
+		SetBorderColor(colors.BorderColor).
 		SetTitle("jpackageTUI")
 
 	optionUI.RootPanel.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
@@ -164,8 +164,8 @@ func NewOptionsUI(options []*option.Option, title string) *OptionUI {
 	})
 
 	formFrame := tview.NewFrame(optionUI.Form)
-	formFrame.AddText(title, true, tview.AlignCenter, Colors.LabelColor)
-	formFrame.SetBackgroundColor(Colors.BackgroundColor)
+	formFrame.AddText(title, true, tview.AlignCenter, colors.LabelColor)
+	formFrame.SetBackgroundColor(colors.BackgroundColor)
 
 	// FormPanel settings
 	optionUI.FormPanel.AddItem(formFrame, 0, 2, true)
@@ -173,22 +173,22 @@ func NewOptionsUI(options []*option.Option, title string) *OptionUI {
 
 	// Main Form settings
 	optionUI.Form.
-		SetFieldBackgroundColor(Colors.FieldBackgroundColor).
-		SetBackgroundColor(Colors.BackgroundColor)
+		SetFieldBackgroundColor(colors.FieldBackgroundColor).
+		SetBackgroundColor(colors.BackgroundColor)
 
 	optionUI.Form.
-		SetLabelColor(Colors.LabelColor)
+		SetLabelColor(colors.LabelColor)
 
 	// DescriptionPanel settings
 	optionUI.DescriptionPanel.
-		SetTextColor(Colors.LabelColor).
-		SetBackgroundColor(Colors.BackgroundColor).
+		SetTextColor(colors.LabelColor).
+		SetBackgroundColor(colors.BackgroundColor).
 		SetBorderPadding(1, 1, 1, 1)
 
 	// ButtonView Settings
 	optionUI.ButtonView.
-		SetButtonBackgroundColor(Colors.ButtonBackgroundColor).
-		SetBackgroundColor(Colors.BackgroundColor).
+		SetButtonBackgroundColor(colors.ButtonBackgroundColor).
+		SetBackgroundColor(colors.BackgroundColor).
 		SetBorderPadding(0, 0, 1, 1)
 
 	optionUI.ButtonView.SetButtonsAlign(tview.AlignRight)

@@ -2,8 +2,8 @@ package resourceBundle
 
 import (
 	"github.com/Xuanwo/go-locale"
-	"github.com/nils/jpackageTUI/internal/Const/resourceBundle/english"
-	"github.com/nils/jpackageTUI/internal/Const/resourceBundle/german"
+	"github.com/nils/jpackageTUI/internal/const/resourceBundle/english"
+	"github.com/nils/jpackageTUI/internal/const/resourceBundle/german"
 	"golang.org/x/text/language"
 	"log"
 )

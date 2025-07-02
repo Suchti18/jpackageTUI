@@ -2,8 +2,8 @@ package tvchooser
 
 import (
 	"github.com/gdamore/tcell/v2"
-	"github.com/nils/jpackageTUI/internal/Const/Colors"
-	"github.com/nils/jpackageTUI/internal/Const/resourceBundle"
+	"github.com/nils/jpackageTUI/internal/const/colors"
+	"github.com/nils/jpackageTUI/internal/const/resourceBundle"
 	"github.com/rivo/tview"
 	"os"
 )
@@ -52,7 +52,7 @@ func FileChooser(parentApp *tview.Application, showHidden bool, fastAccessPaths 
 		app.Stop()
 	})
 
-	buttonsView.SetButtonBackgroundColor(Colors.ButtonBackgroundColor)
+	buttonsView.SetButtonBackgroundColor(colors.ButtonBackgroundColor)
 
 	rootPanel := tview.NewFlex().
 		SetDirection(tview.FlexRow).
@@ -60,10 +60,10 @@ func FileChooser(parentApp *tview.Application, showHidden bool, fastAccessPaths 
 		AddItem(selectionPanel, 0, 1, true).
 		AddItem(buttonsView, 3, 0, false)
 
-	selectedPathView.SetBackgroundColor(Colors.BackgroundColor)
-	dirView.dirView.SetBackgroundColor(Colors.BackgroundColor)
-	fileView.fileList.SetBackgroundColor(Colors.BackgroundColor)
-	buttonsView.SetBackgroundColor(Colors.BackgroundColor)
+	selectedPathView.SetBackgroundColor(colors.BackgroundColor)
+	dirView.dirView.SetBackgroundColor(colors.BackgroundColor)
+	fileView.fileList.SetBackgroundColor(colors.BackgroundColor)
+	buttonsView.SetBackgroundColor(colors.BackgroundColor)
 
 	app.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
 		if event.Key() == tcell.KeyEsc {
@@ -145,7 +145,7 @@ func DirectoryChooser(parentApp *tview.Application, showHidden bool, fastAccessP
 		app.Stop()
 	})
 
-	buttonsView.SetButtonBackgroundColor(Colors.ButtonBackgroundColor)
+	buttonsView.SetButtonBackgroundColor(colors.ButtonBackgroundColor)
 
 	app.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
 		if event.Key() == tcell.KeyEsc {
@@ -170,9 +170,9 @@ func DirectoryChooser(parentApp *tview.Application, showHidden bool, fastAccessP
 		AddItem(selectionPanel, 0, 1, true).
 		AddItem(buttonsView, 3, 0, false)
 
-	selectedPathView.SetBackgroundColor(Colors.BackgroundColor)
-	dirView.dirView.SetBackgroundColor(Colors.BackgroundColor)
-	buttonsView.SetBackgroundColor(Colors.BackgroundColor)
+	selectedPathView.SetBackgroundColor(colors.BackgroundColor)
+	dirView.dirView.SetBackgroundColor(colors.BackgroundColor)
+	buttonsView.SetBackgroundColor(colors.BackgroundColor)
 
 	app.SetRoot(rootPanel, true).EnableMouse(true).EnablePaste(true)
 	if parentApp != nil {

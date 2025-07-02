@@ -126,6 +126,36 @@ func loadGeneric() {
 func loadLinks() {
 	linkOptionUI = NewOptionsUI([]*option.Option{
 		option.NewOption(
+			"Modules",
+			"A comma (\",\") separated list of modules to add\n\nThis module list, along with the main module (if specified) will be passed to jlink as the --add-module argument. If not specified, either just the main module (if --module is specified), or the default set of modules (if --main-jar is specified) are used.",
+			"--add-modules",
+			option.CrossPlatform,
+			true,
+			true,
+			[]string{},
+			false,
+			option.Text),
+		option.NewOption(
+			"jlink options",
+			"A space separated list of options to pass to jlink\n\nIf not specified, defaults to \"--strip-native-commands --strip-debug --no-man-pages --no-header-files\"",
+			"--jlink-options",
+			option.CrossPlatform,
+			true,
+			true,
+			[]string{},
+			false,
+			option.Text),
+		option.NewOption(
+			"Runtime image",
+			"Path of the predefined runtime image that will be copied into the application image (absolute path or relative to the current directory)\n\nIf --runtime-image is not specified, jpackage will run jlink to create the runtime image using options specified by --jlink-options.",
+			"--runtime-image",
+			option.CrossPlatform,
+			true,
+			true,
+			[]string{},
+			false,
+			option.Folder),
+		option.NewOption(
 			"Module",
 			"The main module (and optionally main class) of the application",
 			"--module",
@@ -147,7 +177,7 @@ func loadLinks() {
 			option.Folder),
 		option.NewOption(
 			"--win-console",
-			"Creates a console launcher for the application, should be specified for application which requires console interactions",
+			"Creates a console launcher for the application, should be specified for application which requires console interactions (available only when running on Windows)",
 			"--win-console",
 			option.Win,
 			true,

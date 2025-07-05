@@ -22,7 +22,7 @@ Run the jpackageTUI executable file by typing:
 ```bash
 jpackageTUI.exe
 ```
-or ()
+or
 ```bash
 ./jpackageTUI.exe
 ```

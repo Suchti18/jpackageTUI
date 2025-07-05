@@ -20,7 +20,11 @@ You can install it by either [building](#building) it yourself or downloading th
 
 Run the jpackageTUI executable file by typing:
 ```bash
-.\jpackageTUI.exe
+jpackageTUI.exe
+```
+or ()
+```bash
+./jpackageTUI.exe
 ```
 
 ### Requirements

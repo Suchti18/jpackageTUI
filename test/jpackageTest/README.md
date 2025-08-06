@@ -1,4 +1,5 @@
 ## Test project for jpackageTUI
 
-The main module and main class of the application: jpackageTest/de.nils.jpackageTest.JpackageTest
-Module path: ./bin
+__The main module and main class of the application:__ jpackageTest/de.nils.jpackageTest.JpackageTest
+<br>
+__Module path:__ ./bin

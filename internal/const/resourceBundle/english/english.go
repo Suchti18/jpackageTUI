@@ -23,6 +23,7 @@ func init() {
 		"JpackageNotInstalled": "jpackage is not installed properly. Make sure to include it in the PATH variable. Use --force to skip this check",
 		"SkipjpackageCheck":    "Skipping jpackage check",
 		"SuccessfulExit":       "Command finished successfully",
+		"PressKeyToContinue":   "Press any key to continue",
 	}
 }
 

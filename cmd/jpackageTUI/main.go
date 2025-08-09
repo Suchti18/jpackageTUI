@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/eiannone/keyboard"
 	"github.com/nils/jpackageTUI/internal/const/args"
 	"github.com/nils/jpackageTUI/internal/const/exitCodes"
 	"github.com/nils/jpackageTUI/internal/const/resourceBundle"
@@ -18,6 +19,13 @@ func main() {
 		fmt.Println(resourceBundle.GetString("SkipjpackageCheck"))
 	} else if !isjpackageInstalled() {
 		fmt.Println(resourceBundle.GetString("JpackageNotInstalled"))
+
+		fmt.Println(resourceBundle.GetString("PressKeyToContinue"))
+		_, _, err := keyboard.GetSingleKey()
+		if err != nil {
+			log.Fatal(err)
+		}
+
 		os.Exit(exitCodes.JpackageNotInstalled)
 	}
 

@@ -20,7 +20,7 @@ func init() {
 		"Next":                 "Weiter",
 		"Finish":               "Fertig",
 		"Include":              "<%s> hinzufügen?",
-		"JpackageNotInstalled": "jpackage wurde nicht korrekt in die PATH-Variable eingebunden. Nutze --force um diese Überprüfung zu überspringen",
+		"JpackageNotInstalled": "jpackage wurde nicht korrekt in die PATH-Variable eingebunden. Nutze --force um diese Überprüfung zu überspringen (Schau dir die README für mehr Informationen an)",
 		"SkipjpackageCheck":    "jpackage Check übersprungen",
 		"SuccessfulExit":       "jpackage wurde mit deinen Optionen ausgeführt",
 		"PressKeyToContinue":   "Drücke irgendeine Taste um fortzufahren",

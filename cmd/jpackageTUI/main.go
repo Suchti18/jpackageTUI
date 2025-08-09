@@ -76,8 +76,14 @@ func runjpackageCommand(parameters []string) {
 	cmd.Stderr = os.Stderr
 
 	if err := cmd.Run(); err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	} else {
 		fmt.Println(resourceBundle.GetString("SuccessfulExit"))
+	}
+
+	fmt.Println(resourceBundle.GetString("PressKeyToContinue"))
+	_, _, err := keyboard.GetSingleKey()
+	if err != nil {
+		log.Fatal(err)
 	}
 }

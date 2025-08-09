@@ -10,6 +10,9 @@ jpackageTUI is a Textual User Interface (TUI) designed to simplify the usage of 
 exporting Java projects. The tool is currently in its early development phase, providing basic
 functionality to streamline simple tasks.
 
+> [!NOTE]
+> [Test Project](https://github.com/Suchti18/jpackageTUI/tree/main/test/jpackageTest)
+
 ---
 
 

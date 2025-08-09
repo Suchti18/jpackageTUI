@@ -21,7 +21,7 @@ You can install it by either [building](#building) it yourself or downloading th
 
 ## Usage
 
-Run the jpackageTUI executable file by typing:
+Run the jpackageTUI executable file in your terminal by typing :
 ```bash
 jpackageTUI.exe
 ```
